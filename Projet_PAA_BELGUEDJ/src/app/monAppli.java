@@ -3,6 +3,8 @@ import java.util.Scanner;
 import gestion.GestionRelations;
 import gestion.GestionAffectation;
 import model.Colon;
+import java.util.ArrayList;
+import java.util.List;
 
 //This is url du dépot 
 //https://github.com/Nassilya/projet_paa.git
@@ -46,10 +48,16 @@ public class monAppli {
 				 String nomColon = sc.nextLine().toUpperCase();
 				 Colon cn = new Colon(nomColon);
 				 System.out.println("Veuillez entrer les préférances du colon ex : 1,2,3... ");
+				 
 				 String preferencesLine=sc.nextLine();
 				 Scanner lineScanner=new Scanner(preferencesLine);
-				 
-				 gf.ajouterPreferencesColon(cn,);
+				 List<Integer> preferencesList=new ArrayList<>();
+				 while(lineScanner.hasNextInt()) {
+					 preferencesList.add(lineScanner.nextInt());
+				 }
+				lineScanner.close();
+				int[] preferences = preferencesList.stream().mapToInt(Integer::intValue).toArray();
+				 gf.ajouterPreferencesColon(cn,preferences);
 				 break;
 				
 			case 3:
