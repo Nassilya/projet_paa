@@ -13,7 +13,7 @@ public class GestionAffectation {
         for (int i = 0; i < nombreColons; i++) {
             char nom = (char) ('A' + i); // Nommer les colons A, B, C ... 'A' + 0 ->'A' 65 en ASCII
             colons.add(new Colon(String.valueOf(nom))); //nom s'attend a avoir un string du coup String pour convertir char en string
-            ressources.add(new Ressource(i + 1, "Ressource " + (i + 1))); // Créer des ressources
+            ressources.add(new Ressource(i + 1)); // Créer des ressources
         }
     }
 
@@ -23,7 +23,7 @@ public class GestionAffectation {
             for (Ressource ressource : colon.getPreferences()) { //parcourir liste de préferece de chaque colon
                 if (!ressourceEstDejaAttribuee(ressource)) {
                     colon.setRessourceAttribuee(ressource);
-                    System.out.println(colon.getNom() + " reçoit " + ressource.getNom());
+                    System.out.println(colon.getNom() + " reçoit " + ressource.getId());
                     break;//colon cherche pas a recevori d'autre ressource 
                           // juste 1ere dans liste parmi il prefere
                     //puis on passe au colon suivant 
@@ -60,9 +60,12 @@ public class GestionAffectation {
     // Ajouter listes préférences d'un colon        conserve ordre préférences  accés index  taille fixe
     public void ajouterPreferencesColon(Colon colon, int[] preferences) { //ex -> je prefere le 1,3,6 éme
         List<Ressource> listePreferences = new ArrayList<>(); //liste vide 
-        for (int p : preferences) { //pour chaque elem du tableau
-            listePreferences.add(ressources.get(p - 1));
-        }                        //récupérer une ressource spécifique
+       // for (int p : preferences) { //pour chaque elem du tableau
+            //listePreferences.add(ressources.get(p - 1));
+        	 //récupérer une ressource spécifique
+        colon.setResourceInt(preferences);
+      // }                      
+       
         colon.ajouterPreferences(listePreferences); 
     }
 
