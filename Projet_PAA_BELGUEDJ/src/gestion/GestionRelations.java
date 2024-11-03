@@ -5,6 +5,15 @@ import java.util.List;
 
 public class GestionRelations {
 	private List<Colon> colons = new ArrayList<>();
+	
+	public void ajouterColon(Colon colon) {
+        if (!colons.contains(colon)) {
+            colons.add(colon);
+            System.out.println("Colon " + colon.getNom() + " ajouté à la colonie.");
+        } else {
+            System.out.println("Le colon " + colon.getNom() + " existe déjà.");
+        }
+    }
     
 	//pour la symétrie 
     public void ajouterRelation(Colon colon1, Colon colon2) {
