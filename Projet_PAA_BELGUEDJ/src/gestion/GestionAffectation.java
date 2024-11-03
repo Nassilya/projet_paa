@@ -11,9 +11,9 @@ public class GestionAffectation {
     // Méthode pour créer des colons et des ressources
     public void creerColonsEtRessources(int nombreColons) {
         for (int i = 0; i < nombreColons; i++) {
-            char nom = (char) ('A' + i); // Nommer les colons A, B, C ... 'A' + 0 ->'A' 65 en ASCII
-            colons.add(new Colon(String.valueOf(nom))); //nom s'attend a avoir un string du coup String pour convertir char en string
-            ressources.add(new Ressource(i + 1)); // Créer des ressources
+            char nom = (char) ('A' + i);
+            colons.add(new Colon(String.valueOf(nom)));
+            ressources.add(new Ressource(i + 1)); // Crée des ressources avec des IDs uniques (1, 2, 3, ...)
         }
     }
 
@@ -56,7 +56,34 @@ public class GestionAffectation {
         }
         return null;
     }
+    public void ajouterPreferencesColon(Colon colon, int[] preferences) {
+        List<Ressource> listePreferences = new ArrayList<>();
+        for (int p : preferences) {
+            Ressource ressource = obtenirRessourceParId(p);
+            if (ressource != null) {
+                listePreferences.add(ressource);
+            } else {
+                System.out.println("Ressource " + p + " non trouvée.");
+            }
+        }
 
+        colon.setPreferences(listePreferences); // Passe la liste de Ressource au lieu d'un tableau d'entiers
+        System.out.println("Les préférences pour " + colon.getNom() + " ont été définies.");
+    }
+
+
+
+    // Méthode pour obtenir une ressource par son ID
+    private Ressource obtenirRessourceParId(int id) {
+        for (Ressource ressource : ressources) {
+            if (ressource.getId() == id) {
+                return ressource;
+            }
+        }
+        return null; // Retourne null si aucune ressource ne correspond à l'ID
+    }
+
+/*
     // Ajouter listes préférences d'un colon        conserve ordre préférences  accés index  taille fixe
     public void ajouterPreferencesColon(Colon colon, int[] preferences) { //ex -> je prefere le 1,3,6 éme
         List<Ressource> listePreferences = new ArrayList<>(); //liste vide 
@@ -68,7 +95,14 @@ public class GestionAffectation {
        
         colon.ajouterPreferences(listePreferences); 
     }
-
+    */
+    public void verifierPreferences() {
+        for (Colon colon : colons) {
+            if (colon.getpreferences() == null || colon.getpreferences().length == 0) {
+                System.out.println("Le colon " + colon.getNom() + " n'a pas de préférences.");
+            }
+        }
+    }
     // Vérifier que tous les colons ont une liste complète de préférences
     // + liste préférences même taille liste des ressources disponibles
     public boolean verifierPreferencesCompletes() {
@@ -97,4 +131,25 @@ public class GestionAffectation {
     public List<Colon> getColons() {
         return colons;
     }
+
+    public void afficherAffectation() {
+        System.out.println("Affectation actuelle des ressources :");
+        for (Colon colon : colons) {
+            Ressource ressourceAttribuee = colon.getRessourceAttribuee();
+            System.out.println(colon.getNom() + " : " 
+                + (ressourceAttribuee != null ? ressourceAttribuee.getId() : "Aucune"));
+              //  + " | HashCode: " + colon.hashCode());
+        }
+    }
+
+    public void ajouterColon(Colon colon) {
+        if (!colons.contains(colon)) {
+            colons.add(colon);
+            System.out.println("Colon " + colon.getNom() + " ajouté à la colonie.");
+        } else {
+            System.out.println("Le colon " + colon.getNom() + " existe déjà.");
+        }
+    }
+
 }
+

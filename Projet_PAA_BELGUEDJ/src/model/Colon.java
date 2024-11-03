@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Colon {
     private String nom;
-    private int [] prf;
+    private int [] prf = new int[0];
     private List<Ressource> preferences;
     private List<Colon> relations;
     private Ressource ressourceAttribuee;
@@ -42,12 +42,22 @@ public class Colon {
         return ressourceAttribuee;
     }
 
-    public void setRessourceAttribuee(Ressource ressourceAttribuee) { //modifier you know 
+    public void setRessourceAttribuee(Ressource ressourceAttribuee) {
         this.ressourceAttribuee = ressourceAttribuee;
+        System.out.println("Ressource " + (ressourceAttribuee != null ? ressourceAttribuee.getId() : "Aucune") 
+                           + " attribuée à " + nom);
     }
-    
-    public void setResourceInt(int []prf) {
+
+
+    public void setPreferences(List<Ressource> preferences) {
+        this.preferences = preferences;
+        System.out.println("Les préférences pour " + nom + " ont été définies.");
+    }
+   /* public void setPreferences(int []prf) {
     	this.prf=prf;
     	System.out.println("Les préférences pour " + nom + " ont été définies.");
+    }*/
+    public int[] getpreferences() {
+    	return prf;
     }
 }

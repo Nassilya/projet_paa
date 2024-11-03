@@ -9,10 +9,12 @@ public class GestionRelations {
 	public void ajouterColon(Colon colon) {
         if (!colons.contains(colon)) {
             colons.add(colon);
-            System.out.println("Colon " + colon.getNom() + " ajouté à la colonie.");
+            /*System.out.println("Colon " + colon.getNom() + " ajouté à la colonie.");
         } else {
             System.out.println("Le colon " + colon.getNom() + " existe déjà.");
+            */
         }
+        
     }
     
 	//pour la symétrie 
@@ -20,7 +22,7 @@ public class GestionRelations {
         if (colon1 != null && colon2 != null) { //vérifie si colon1 et colon2 existe
             colon1.ajouterRelation(colon2);
             colon2.ajouterRelation(colon1);
-            System.out.println("Relation ajoutée entre " + colon1.getNom() + " et " + colon2.getNom() +"avec succés !");
+            System.out.println("Relation ajoutée entre " + colon1.getNom() + " et " + colon2.getNom() +" avec succés !");
         } else {
             System.out.println("Erreur : Un ou les deux colons n'existent pas ");
         }
