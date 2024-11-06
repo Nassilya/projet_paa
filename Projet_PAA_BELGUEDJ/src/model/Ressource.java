@@ -1,6 +1,8 @@
 package model;
 
 public class Ressource {
+	//Classe pour la gestion des ressources dans le programme
+	
     private int id;
   // private String nom;
 

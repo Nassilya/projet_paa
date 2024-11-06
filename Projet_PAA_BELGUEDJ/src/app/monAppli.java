@@ -41,7 +41,10 @@ public class monAppli {
 	        System.out.println("3. Fin");
 	        int n1 = sc.nextInt();
 	        sc.nextLine(); // Consomme la nouvelle ligne
-
+	        if (n1 < 1 || n1 > 3) {
+	            System.out.println("Option invalide. Veuillez choisir 1, 2 ou 3.");
+	            continue; // Revenir au début de la boucle
+	        }
 	        switch (n1) {
 	            case 1:
 	                System.out.print("Nom du premier colon : ");
@@ -106,6 +109,11 @@ public class monAppli {
 
 	        int choixMenu = sc.nextInt();
 	        sc.nextLine(); // Consomme la nouvelle ligne
+	        
+	        if (choixMenu < 1 || choixMenu > 3) {
+	            System.out.println("Option invalide. Veuillez choisir 1, 2 ou 3.");
+	            continue; // Revenir au début de la boucle
+	        }
 
 	        switch (choixMenu) {
 	            case 1:
@@ -128,7 +136,7 @@ public class monAppli {
 
 	            case 3:
 	                programmeEnCours = false;
-	                System.out.println("Programme terminé. Merci d'avoir utilisé le système de gestion des colons !");
+	                System.out.println("Vous avez choisi de nous quitter. À très bientôt !");
 	                break;
 
 	            default:
