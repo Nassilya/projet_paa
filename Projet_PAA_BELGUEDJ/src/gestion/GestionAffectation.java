@@ -158,8 +158,8 @@ public class GestionAffectation {
         }
     }
     //génère toutes les permutations des ressources et les assigne aux colons
-    public void trouverSolutionOptimale(CalculateurDeCout calculateur) {
-        List<Ressource> meilleureAffectation = null;
+    public void trouverSolutionsOptimales(CalculateurDeCout calculateur) {
+        List<List<Ressource>> solutionsOptimales = new ArrayList<>();
         int minJalousie = Integer.MAX_VALUE;
 
         // Obtenez toutes les permutations des ressources
@@ -175,22 +175,34 @@ public class GestionAffectation {
             // Calculer le coût "nombre de colons jaloux" de cette affectation
             int jalousie = calculateur.calculerNombreColonsJaloux(colons);
 
-            // Vérifier si cette affectation est meilleure (minimiser le nombre de jaloux)
             if (jalousie < minJalousie) {
+                // Nouvelle meilleure solution trouvée-> MAJ score minimal et la liste des solutions
                 minJalousie = jalousie;
-                meilleureAffectation = new ArrayList<>(permutation);
+                solutionsOptimales.clear();
+                solutionsOptimales.add(new ArrayList<>(permutation));
+            } else if (jalousie == minJalousie) {
+                // Si le score est le même que le min-> ajouter cette permutation aux solutions optimales
+                solutionsOptimales.add(new ArrayList<>(permutation));
             }
         }
 
-        // Appliquer la meilleure affectation trouvée
-        if (meilleureAffectation != null) {
-            for (int i = 0; i < colons.size(); i++) {
-                colons.get(i).setRessourceAttribuee(meilleureAffectation.get(i));
-            }
-
-            System.out.println("Meilleure affectation trouvée avec un coût de jalousie de : " + minJalousie);
-            afficherAffectation();
+        // Afficher le score minimal et toutes les solutions optimales trouvées
+        System.out.println("Score minimal de jalousie : " + minJalousie);
+        System.out.println("Solutions optimales (toutes les affectations possibles avec le score minimal) :");
+        
+        for (List<Ressource> solution : solutionsOptimales) {
+            afficherAffectation(solution);
         }
+    }
+
+    // Méthode pour afficher une affectation spécifique
+    private void afficherAffectation(List<Ressource> affectation) {
+        StringBuilder affichage = new StringBuilder();
+        for (int i = 0; i < colons.size(); i++) {
+            affichage.append(colons.get(i).getNom()).append(":")
+                     .append(affectation.get(i).getId()).append(" ");
+        }
+        System.out.println(affichage.toString().trim());
     }
 
     // Générer toutes les permutations des ressources
@@ -211,6 +223,5 @@ public class GestionAffectation {
             }
         }
     }
-
 }
 
