@@ -60,4 +60,10 @@ public class Colon {
     public int[] getpreferences() {
     	return prf;
     }
+ // Ajout de la méthode toString pour afficher le nom du colon
+    //pour ne pas retourner l'objet type"[model.Colon@266474c2, model.Colon@6f94fa3e]" quand j'appelle afficherRelations
+    @Override
+    public String toString() {
+        return nom;
+    }
 }

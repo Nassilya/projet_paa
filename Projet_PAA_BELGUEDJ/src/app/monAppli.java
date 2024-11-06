@@ -4,13 +4,14 @@ import gestion.GestionRelations;
 import gestion.GestionAffectation;
 import gestion.CalculateurDeCout;
 import model.Colon;
-//import model.Ressource;
+import model.Ressource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//This is url du dépot 
+//This is url du dépot
 //https://github.com/Nassilya/projet_paa.git
+
 public class monAppli {
 
 	public static void main(String[] args) {
@@ -31,7 +32,7 @@ public class monAppli {
 	        gr.ajouterColon(colon); // Ajoute chaque colon à GestionRelations
 	    }
 
-	    // Suite du programme pour ajouter les préférences et gérer le menu
+	    
 	    boolean continuer = true;
 	    while (continuer) {
 	        System.out.println("Choisissez une option parmi les 3 :");
@@ -122,11 +123,12 @@ public class monAppli {
 	                calculateur.calculerNombreColonsJaloux(gf.getColons());
 	                System.out.println("Affichage des ressources après le calcul des jaloux :");
 	                gf.afficherAffectation();
+	                gr.afficherRelations();
 	                break;
 
 	            case 3:
 	                programmeEnCours = false;
-	                System.out.println("Programme terminé. Merci d'avoir utilisé le système de gestion des colons.");
+	                System.out.println("Programme terminé. Merci d'avoir utilisé le système de gestion des colons !");
 	                break;
 
 	            default:
