@@ -4,13 +4,18 @@ import model.Ressource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+	
 
 public class GestionAffectation {
     private List<Colon> colons = new ArrayList<>();
     private List<Ressource> ressources = new ArrayList<>();
 
-    // Méthode pour créer des colons et des ressources
-    //les objets Ressource sont créés et ajoutés à une liste de ressources
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour créer des colons et des ressources
+     * nb: les objets Ressource sont créés et ajoutés à une liste de ressources
+     */
     public void creerColonsEtRessources(int nombreColons) {
         for (int i = 0; i < nombreColons; i++) {
             char nom = (char) ('A' + i);
@@ -19,8 +24,12 @@ public class GestionAffectation {
         }
     }
 
-    // Proposer une solution naïve d'affectation des ressources
-    //Assigner les objets Ressource aux colons en fonction de leurs préférences
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Proposer une solution naïve d'affectation des ressources
+     *Assigner les objets Ressource aux colons en fonction de leurs préférences
+     */
     public void proposerSolutionNaive() {
         for (Colon colon : colons) {
             for (Ressource ressource : colon.getPreferences()) { //parcourir liste de préferece de chaque colon
@@ -35,7 +44,10 @@ public class GestionAffectation {
         }
     }
 
-    // Échanger les ressources attribuées entre deux colons
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Échanger les ressources attribuées entre deux colons
+     */
     public void echangerRessources(String nom1, String nom2) {
         Colon c1 = trouverColon(nom1);
         Colon c2 = trouverColon(nom2);
@@ -50,7 +62,10 @@ public class GestionAffectation {
         }
     }
 
-    // Trouver un colon par son nom
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Trouver un colon par son nom
+     */
     public Colon trouverColon(String nom) {
         for (Colon colon : colons) {
             if (colon.getNom().equals(nom)) {
@@ -59,6 +74,11 @@ public class GestionAffectation {
         }
         return null;
     }
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Ajouter les préférences d'un colon
+     * Avec vérification des doublons
+     */
     public void ajouterPreferencesColon(Colon colon, int[] preferences) {
         List<Ressource> listePreferences = new ArrayList<>();
         List<Integer> uniquePreferences = new ArrayList<>();
@@ -92,7 +112,11 @@ public class GestionAffectation {
 
 
 
-    // Méthode pour obtenir une ressource par son ID
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour obtenir une ressource par son ID
+     */
     private Ressource obtenirRessourceParId(int id) {
         for (Ressource ressource : ressources) {
             if (ressource.getId() == id) {
@@ -102,7 +126,11 @@ public class GestionAffectation {
         return null; // Retourne null si aucune ressource ne correspond à l'ID
     }
 
-
+   
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour vérifier si un colon a bien une liste de préférence
+     */
     public void verifierPreferences() {
         for (Colon colon : colons) {
             if (colon.getpreferences() == null || colon.getpreferences().length == 0) {
@@ -110,8 +138,12 @@ public class GestionAffectation {
             }
         }
     }
-    // Vérifier que tous les colons ont une liste complète de préférences
-    // + liste préférences même taille liste des ressources disponibles
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Vérifier que tous les colons ont une liste complète de préférences
+     * + liste préférences même taille liste des ressources disponibles
+     */
     public boolean verifierPreferencesCompletes() {
         for (Colon colon : colons) {
         	
@@ -124,7 +156,10 @@ public class GestionAffectation {
         return true;
     }
 
-    // Vérifier si une ressource est déjà attribuée à un colon
+     /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour vérifier si une ressource est déjà attribuée à un colon
+     */
     private boolean ressourceEstDejaAttribuee(Ressource ressource) { //un objet
         for (Colon colon : colons) {
             if (ressource.equals(colon.getRessourceAttribuee())) {
@@ -134,7 +169,11 @@ public class GestionAffectation {
         return false;
     }
 
-    // Retourner la liste des colons
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour retourner la liste des colons
+     */
     public List<Colon> getColons() {
         return colons;
     }
@@ -148,7 +187,10 @@ public class GestionAffectation {
               //  + " | HashCode: " + colon.hashCode());
         }
     }
-
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour ajouter un colon
+     */
     public void ajouterColon(Colon colon) {
         if (!colons.contains(colon)) {
             colons.add(colon);
@@ -157,7 +199,13 @@ public class GestionAffectation {
             System.out.println("Le colon " + colon.getNom() + " existe déjà.");
         }
     }
-    //génère toutes les permutations des ressources et les assigne aux colons
+   
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour génèrer toutes les permutations des ressources et les assigne aux colons
+     * + trouve toutes les solutions optimales avec le score minimal de jalousie
+     */
     public void trouverSolutionsOptimales(CalculateurDeCout calculateur) {
         List<List<Ressource>> solutionsOptimales = new ArrayList<>();
         int minJalousie = Integer.MAX_VALUE;
@@ -195,7 +243,10 @@ public class GestionAffectation {
         }
     }
 
-    // Méthode pour afficher une affectation spécifique
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour afficher une affectation spécifique
+     */
     private void afficherAffectation(List<Ressource> affectation) {
         StringBuilder affichage = new StringBuilder();
         for (int i = 0; i < colons.size(); i++) {
@@ -205,13 +256,20 @@ public class GestionAffectation {
         System.out.println(affichage.toString().trim());
     }
 
-    // Générer toutes les permutations des ressources
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour générer toutes les permutations des ressources
+     */
     private List<List<Ressource>> permuter(List<Ressource> ressources) {
         List<List<Ressource>> permutations = new ArrayList<>();
         permuter(ressources, 0, permutations);
         return permutations;
     }
-
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour 
+     */
     private void permuter(List<Ressource> ressources, int index, List<List<Ressource>> permutations) {
         if (index == ressources.size() - 1) {
             permutations.add(new ArrayList<>(ressources));

@@ -26,8 +26,12 @@ public class Colon {
     public void ajouterPreferences(List<Ressource> preferences) {
         this.preferences = preferences;
     }
-    //ajout d'une relation pour un colon spécifique
-    //A.ajouterRelation(B)
+   
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * ajout d'une relation pour un colon spécifique
+     * A.ajouterRelation(B)
+     */
     public void ajouterRelation(Colon autreColon) {
         if (!relations.contains(autreColon)) {
             relations.add(autreColon);
@@ -60,8 +64,12 @@ public class Colon {
     public int[] getpreferences() {
     	return prf;
     }
- // Ajout de la méthode toString pour afficher le nom du colon
-    //pour ne pas retourner l'objet type"[model.Colon@266474c2, model.Colon@6f94fa3e]" quand j'appelle afficherRelations
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Ajout de la méthode toString pour afficher le nom du colon
+     * pour ne pas retourner l'objet type"[model.Colon@266474c2, model.Colon@6f94fa3e]" quand j'appelle afficherRelations
+     */
     @Override
     public String toString() {
         return nom;
