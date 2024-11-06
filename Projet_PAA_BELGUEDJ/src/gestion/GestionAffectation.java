@@ -3,6 +3,7 @@ import model.Colon;
 import model.Ressource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class GestionAffectation {
     private List<Colon> colons = new ArrayList<>();
@@ -45,7 +46,7 @@ public class GestionAffectation {
             c2.setRessourceAttribuee(temp);
             System.out.println("Échange effectué entre " + nom1 + " et " + nom2);
         } else {
-            System.out.println("Erreur : Un ou les deux colons n'existent pas.");
+            System.out.println("Erreur : Un ou les deux colons n'existent pas");
         }
     }
 
@@ -60,17 +61,33 @@ public class GestionAffectation {
     }
     public void ajouterPreferencesColon(Colon colon, int[] preferences) {
         List<Ressource> listePreferences = new ArrayList<>();
+        List<Integer> uniquePreferences = new ArrayList<>();
+        
+        // Vérification des doublons
+        for (int p : preferences) {
+            if (uniquePreferences.contains(p)) {
+                System.out.println("Erreur : La ressource " + p + " est en double dans les préférences de " + colon.getNom());
+                return; // Arrêtez la vérification si un doublon est détecté
+            }
+            uniquePreferences.add(p);
+        }
         for (int p : preferences) {
             Ressource ressource = obtenirRessourceParId(p);
             if (ressource != null) {
                 listePreferences.add(ressource);
             } else {
-                System.out.println("Ressource " + p + " non trouvée.");
+                System.out.println("Erreur : La ressource " + p + " n'existe pas");
             }
         }
-
-        colon.setPreferences(listePreferences); // Passe la liste de Ressource au lieu d'un tableau d'entiers
-        System.out.println("Les préférences pour " + colon.getNom() + " ont été définies.");
+        
+        // Vérification que le nombre de préférences est égal au nombre de ressources disponibles
+        if (listePreferences.size() == ressources.size()) {
+            colon.setPreferences(listePreferences);
+            System.out.println("Les préférences pour " + colon.getNom() + " ont été définies");
+        } else {
+            System.out.println("Erreur : Les préférences pour " + colon.getNom() 
+                               + " sont incomplètes. Veuillez inclure toutes les ressources disponibles");
+        }
     }
 
 
@@ -85,23 +102,11 @@ public class GestionAffectation {
         return null; // Retourne null si aucune ressource ne correspond à l'ID
     }
 
-/*
-    // Ajouter listes préférences d'un colon        conserve ordre préférences  accés index  taille fixe
-    public void ajouterPreferencesColon(Colon colon, int[] preferences) { //ex -> je prefere le 1,3,6 éme
-        List<Ressource> listePreferences = new ArrayList<>(); //liste vide 
-       // for (int p : preferences) { //pour chaque elem du tableau
-            //listePreferences.add(ressources.get(p - 1));
-        	 //récupérer une ressource spécifique
-        colon.setResourceInt(preferences);
-      // }                      
-       
-        colon.ajouterPreferences(listePreferences); 
-    }
-    */
+
     public void verifierPreferences() {
         for (Colon colon : colons) {
             if (colon.getpreferences() == null || colon.getpreferences().length == 0) {
-                System.out.println("Le colon " + colon.getNom() + " n'a pas de préférences.");
+                System.out.println("Le colon " + colon.getNom() + " n'a pas de préférences");
             }
         }
     }
@@ -112,7 +117,7 @@ public class GestionAffectation {
         	
             if (colon.getPreferences().size() != ressources.size()) {
             	//autre condition colon.getPreferences().isEmpty()
-                System.out.println("Le colon " + colon.getNom() + " n'a pas une liste complète de préférences.");
+                System.out.println("Le colon " + colon.getNom() + " n'a pas une liste complète de préférences");
                 return false;
             }
         }
@@ -150,6 +155,60 @@ public class GestionAffectation {
             System.out.println("Colon " + colon.getNom() + " ajouté à la colonie.");
         } else {
             System.out.println("Le colon " + colon.getNom() + " existe déjà.");
+        }
+    }
+    //génère toutes les permutations des ressources et les assigne aux colons
+    public void trouverSolutionOptimale(CalculateurDeCout calculateur) {
+        List<Ressource> meilleureAffectation = null;
+        int minJalousie = Integer.MAX_VALUE;
+
+        // Obtenez toutes les permutations des ressources
+        List<List<Ressource>> permutations = permuter(ressources);
+
+        // Testez chaque permutation
+        for (List<Ressource> permutation : permutations) {
+            // Appliquer l'affectation de la permutation courante
+            for (int i = 0; i < colons.size(); i++) {
+                colons.get(i).setRessourceAttribuee(permutation.get(i));
+            }
+
+            // Calculer le coût "nombre de colons jaloux" de cette affectation
+            int jalousie = calculateur.calculerNombreColonsJaloux(colons);
+
+            // Vérifier si cette affectation est meilleure (minimiser le nombre de jaloux)
+            if (jalousie < minJalousie) {
+                minJalousie = jalousie;
+                meilleureAffectation = new ArrayList<>(permutation);
+            }
+        }
+
+        // Appliquer la meilleure affectation trouvée
+        if (meilleureAffectation != null) {
+            for (int i = 0; i < colons.size(); i++) {
+                colons.get(i).setRessourceAttribuee(meilleureAffectation.get(i));
+            }
+
+            System.out.println("Meilleure affectation trouvée avec un coût de jalousie de : " + minJalousie);
+            afficherAffectation();
+        }
+    }
+
+    // Générer toutes les permutations des ressources
+    private List<List<Ressource>> permuter(List<Ressource> ressources) {
+        List<List<Ressource>> permutations = new ArrayList<>();
+        permuter(ressources, 0, permutations);
+        return permutations;
+    }
+
+    private void permuter(List<Ressource> ressources, int index, List<List<Ressource>> permutations) {
+        if (index == ressources.size() - 1) {
+            permutations.add(new ArrayList<>(ressources));
+        } else {
+            for (int i = index; i < ressources.size(); i++) {
+                Collections.swap(ressources, i, index);
+                permuter(ressources, index + 1, permutations);
+                Collections.swap(ressources, i, index); // Revenir à l'état initial
+            }
         }
     }
 

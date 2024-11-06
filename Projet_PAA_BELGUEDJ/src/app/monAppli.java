@@ -137,7 +137,10 @@ public class monAppli {
 	            case 3:
 	                programmeEnCours = false;
 	                System.out.println("Vous avez choisi de nous quitter. À très bientôt !");
+	             // Calculer et afficher la solution optimale avant de quitter
+	                gf.trouverSolutionOptimale(calculateur); //Dans GestionAffectation
 	                break;
+	                
 
 	            default:
 	                System.out.println("Option invalide. Veuillez choisir 1, 2 ou 3.");
