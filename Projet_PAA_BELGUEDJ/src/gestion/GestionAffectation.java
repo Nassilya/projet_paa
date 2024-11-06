@@ -9,6 +9,7 @@ public class GestionAffectation {
     private List<Ressource> ressources = new ArrayList<>();
 
     // Méthode pour créer des colons et des ressources
+    //les objets Ressource sont créés et ajoutés à une liste de ressources
     public void creerColonsEtRessources(int nombreColons) {
         for (int i = 0; i < nombreColons; i++) {
             char nom = (char) ('A' + i);
@@ -18,6 +19,7 @@ public class GestionAffectation {
     }
 
     // Proposer une solution naïve d'affectation des ressources
+    //Assigner les objets Ressource aux colons en fonction de leurs préférences
     public void proposerSolutionNaive() {
         for (Colon colon : colons) {
             for (Ressource ressource : colon.getPreferences()) { //parcourir liste de préferece de chaque colon

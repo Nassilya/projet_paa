@@ -4,7 +4,7 @@ import gestion.GestionRelations;
 import gestion.GestionAffectation;
 import gestion.CalculateurDeCout;
 import model.Colon;
-import model.Ressource;
+//import model.Ressource;
 
 import java.util.ArrayList;
 import java.util.List;
