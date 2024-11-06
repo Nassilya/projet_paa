@@ -17,7 +17,11 @@ public class GestionRelations {
         
     }
     
-	//pour la symétrie 
+	
+	/*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Pour la symétrie
+     */
     public void ajouterRelation(Colon colon1, Colon colon2) {
         if (colon1 != null && colon2 != null) { //vérifie si colon1 et colon2 existe
             colon1.ajouterRelation(colon2);
@@ -27,7 +31,10 @@ public class GestionRelations {
             System.out.println("Erreur : Un ou les deux colons n'existent pas ");
         }
     }
-
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour afficher Relations
+     */
     public void afficherRelations() {
         for (Colon colon : colons) {
             System.out.println("Le colon " + colon.getNom() + " n'aime pas : " + colon.getRelations());
