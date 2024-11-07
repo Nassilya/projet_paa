@@ -44,6 +44,7 @@ public class GestionAffectation {
         }
     }
 
+    
     /*
      * @Auteur: BELGUEDJ NASSILYA
      * Échanger les ressources attribuées entre deux colons
@@ -62,6 +63,7 @@ public class GestionAffectation {
         }
     }
 
+    
     /*
      * @Auteur: BELGUEDJ NASSILYA
      * Trouver un colon par son nom
@@ -138,6 +140,7 @@ public class GestionAffectation {
             }
         }
     }
+    
     
     /*
      * @Auteur: BELGUEDJ NASSILYA

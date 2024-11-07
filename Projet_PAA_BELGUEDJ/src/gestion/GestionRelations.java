@@ -6,9 +6,14 @@ import java.util.List;
 public class GestionRelations {
 	private List<Colon> colons = new ArrayList<>();
 	
+	/*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Méthode pour ajouter un colon à une List de colons
+     */
 	public void ajouterColon(Colon colon) {
         if (!colons.contains(colon)) {
             colons.add(colon);
+          //TEST Affichage 
             /*System.out.println("Colon " + colon.getNom() + " ajouté à la colonie.");
         } else {
             System.out.println("Le colon " + colon.getNom() + " existe déjà.");
@@ -33,7 +38,7 @@ public class GestionRelations {
     }
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour afficher Relations
+     * Méthode pour afficher les relations entre colons
      */
     public void afficherRelations() {
         for (Colon colon : colons) {

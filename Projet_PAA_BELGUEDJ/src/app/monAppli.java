@@ -9,11 +9,11 @@ import model.Colon;
 import java.util.ArrayList;
 import java.util.List;
 
-//This is url du dépot
-//https://github.com/Nassilya/projet_paa.git
-
 public class monAppli {
-
+	/*
+     * @Auteur: BELGUEDJ NASSILYA
+     *URL du dépot Github -> https://github.com/Nassilya/projet_paa.git
+     */
 	public static void main(String[] args) {
 	    GestionRelations gr = new GestionRelations();
 	    GestionAffectation gf = new GestionAffectation();
