@@ -13,8 +13,8 @@ public class GestionAffectation {
     
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour créer des colons et des ressources
-     * nb: les objets Ressource sont créés et ajoutés à une liste de ressources
+     * Crée des colons et des ressources
+     * Les colons sont nommés avec des lettres alphabétiques et les ressources sont créées avec des IDs uniques
      */
     public void creerColonsEtRessources(int nombreColons) {
         for (int i = 0; i < nombreColons; i++) {
@@ -27,8 +27,8 @@ public class GestionAffectation {
     
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Proposer une solution naïve d'affectation des ressources
-     *Assigner les objets Ressource aux colons en fonction de leurs préférences
+     * Propose une solution naïve d'affectation des ressources aux colons
+     * Attribue la première ressource préférée disponible pour chaque colon
      */
     public void proposerSolutionNaive() {
         for (Colon colon : colons) {
@@ -47,7 +47,7 @@ public class GestionAffectation {
     
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Échanger les ressources attribuées entre deux colons
+     * Échange les ressources attribuées entre deux colons spécifiés par leur nom
      */
     public void echangerRessources(String nom1, String nom2) {
         Colon c1 = trouverColon(nom1);
@@ -112,9 +112,6 @@ public class GestionAffectation {
         }
     }
 
-
-
-    
     /*
      * @Auteur: BELGUEDJ NASSILYA
      * Méthode pour obtenir une ressource par son ID
@@ -248,7 +245,7 @@ public class GestionAffectation {
 
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour afficher une affectation spécifique
+     * Méthode pour afficher une affectation spécifique de ressource
      */
     private void afficherAffectation(List<Ressource> affectation) {
         StringBuilder affichage = new StringBuilder();
@@ -262,16 +259,17 @@ public class GestionAffectation {
     
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour générer toutes les permutations des ressources
+     * Méthode pour générer toutes les permutations possibkes des ressources
      */
+            //liste de liste
     private List<List<Ressource>> permuter(List<Ressource> ressources) {
         List<List<Ressource>> permutations = new ArrayList<>();
-        permuter(ressources, 0, permutations);
+        permuter(ressources, 0, permutations); //appel récursif
         return permutations;
     }
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour 
+     * Méthode récursive pour générer toutes les permutations possibles des ressources
      */
     private void permuter(List<Ressource> ressources, int index, List<List<Ressource>> permutations) {
         if (index == ressources.size() - 1) {
@@ -284,5 +282,9 @@ public class GestionAffectation {
             }
         }
     }
+    //La méthode permuter(List<Ressource> ressources) initialise la génération de permutations en créant une liste permutations 
+    //ET en appelant la méthode récursive permuter avec un index de départ ->méthode récursive effectue des échanges successifs pour générer toutes les combinaisons
+    //EN ajoutant chaque permutation complète à la liste finale permutations
+    
 }
 

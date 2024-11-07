@@ -6,9 +6,9 @@ import java.util.List;
 public class GestionRelations {
 	private List<Colon> colons = new ArrayList<>();
 	
-	/*
+	 /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour ajouter un colon à une List de colons
+     * Ajoute un colon à la liste des colons (s'il n'est pas déjà présent)
      */
 	public void ajouterColon(Colon colon) {
         if (!colons.contains(colon)) {
@@ -25,7 +25,8 @@ public class GestionRelations {
 	
 	/*
      * @Auteur: BELGUEDJ NASSILYA
-     * Pour la symétrie
+     * Ajoute une relation symétrique "ne s'aiment pas" entre deux colons
+     * Cela signifie que chaque colon est ajouté à la liste des relations de l'autre
      */
     public void ajouterRelation(Colon colon1, Colon colon2) {
         if (colon1 != null && colon2 != null) { //vérifie si colon1 et colon2 existe
@@ -38,7 +39,8 @@ public class GestionRelations {
     }
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour afficher les relations entre colons
+     * Affiche les relations entre les colons
+     * Pour chaque colon affiche la liste des colons avec lesquels il a une relation "ne s'aiment pas"
      */
     public void afficherRelations() {
         for (Colon colon : colons) {

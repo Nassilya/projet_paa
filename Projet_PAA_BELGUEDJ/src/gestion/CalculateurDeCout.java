@@ -8,7 +8,7 @@ public class CalculateurDeCout {
 	/*
      * @Auteur: BELGUEDJ NASSILYA
      * Méthode pour calculer nombre de jaloux et afficher ce nombre
-     * un colon soit jaloux uniquement si un voisin reçoit une ressource qu'il aurait préféré à la sienne
+     * Un colon est jaloux uniquement si un voisin reçoit une ressource qu'il aurait préféré à la sienne
      */
 	public int calculerNombreColonsJaloux(List<Colon> colons) {
 	    int nombreJaloux = 0;

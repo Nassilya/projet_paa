@@ -29,49 +29,73 @@ public class Colon {
    
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * ajout d'une relation pour un colon spécifique
-     * A.ajouterRelation(B)
+     * Ajoute une relation entre ce colon et un autre colon spécifique
+     * Exemple d'utilisation : A.ajouterRelation(B)
      */
     public void ajouterRelation(Colon autreColon) {
         if (!relations.contains(autreColon)) {
             relations.add(autreColon);
         }
     }
-
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Retourne la liste des colons en relation avec ce colon
+     */
     public List<Colon> getRelations() {
         return relations;
     }
-
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Retourne la ressource actuellement attribuée à ce colon
+     */
     public Ressource getRessourceAttribuee() {
         return ressourceAttribuee;
     }
-
+    
+    
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Attribue une ressource spécifique à ce colon et affiche un message indiquant la ressource attribuée
+     */
     public void setRessourceAttribuee(Ressource ressourceAttribuee) {
         this.ressourceAttribuee = ressourceAttribuee;
         System.out.println("Ressource " + (ressourceAttribuee != null ? ressourceAttribuee.getId() : "Aucune") 
                            + " attribuée à " + nom);
     }
 
-
+    /*
+     * @Auteur: BELGUEDJ NASSILYA
+     * Définit la liste des préférences pour ce colon et affiche un message de confirmation
+     */
     public void setPreferences(List<Ressource> preferences) {
         this.preferences = preferences;
-        System.out.println("Les préférences pour " + nom + " ont été définies.");
+        System.out.println("Les préférences pour " + nom + " ont été définies");
     }
-   /* public void setPreferences(int []prf) {
-    	this.prf=prf;
-    	System.out.println("Les préférences pour " + nom + " ont été définies.");
-    }*/
+   
+    /*
+     *  @Auteur: BELGUEDJ NASSILYA
+     * Retourne les préférences sous forme de tableau d'entiers
+     */
     public int[] getpreferences() {
     	return prf;
     }
+
     
     /*
      * @Auteur: BELGUEDJ NASSILYA
-     * Ajout de la méthode toString pour afficher le nom du colon
-     * pour ne pas retourner l'objet type"[model.Colon@266474c2, model.Colon@6f94fa3e]" quand j'appelle afficherRelations
+     * Ajoute une méthode toString pour afficher le nom du colon
+     * Cela permet d'éviter de retourner un identifiant d'objet de type "[model.Colon@266474c2]"
+     * lorsque la méthode afficherRelations est appelée
      */
     @Override
     public String toString() {
         return nom;
     }
+    
+    
+    /* public void setPreferences(int []prf) {
+	this.prf=prf;
+	System.out.println("Les préférences pour " + nom + " ont été définies.");
+}*/
+    
 }
