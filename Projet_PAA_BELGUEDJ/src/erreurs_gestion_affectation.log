@@ -1,0 +1,5 @@
+[2024-12-16 15:19:30] [CRITICAL] Contexte: proposerSolutionNaive | Exception: IllegalStateException | Message: Le colon 0 n'a pas de préférences définies. | Cause: Aucune cause
+[2024-12-16 15:23:13] [CRITICAL] Contexte: proposerSolutionNaive | Exception: IllegalStateException | Message: Le colon 0 n'a pas de préférences définies. | Cause: Aucune cause
+[2024-12-16 15:31:56] [CRITICAL] Contexte: proposerSolutionNaive | Exception: IllegalStateException | Message: Le colon 0 n'a pas de préférences définies. | Cause: Aucune cause
+[2024-12-16 15:51:25] [CRITICAL] Contexte: proposerSolutionNaive | Exception: IllegalStateException | Message: Le colon 0 n'a pas de préférences définies. | Cause: Aucune cause
+[2024-12-16 15:56:33] [CRITICAL] Contexte: proposerSolutionNaive | Exception: IllegalStateException | Message: Le colon 0 n'a pas de préférences définies. | Cause: Aucune cause
