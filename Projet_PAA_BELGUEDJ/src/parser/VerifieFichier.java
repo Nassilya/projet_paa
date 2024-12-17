@@ -6,6 +6,28 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class VerifieFichier {
+	/**
+	 * @author NAGULESWARAN ALICIA
+	 * Vérifie la validité syntaxique et sémantique d'un fichier de configuration pour l'affectation des ressources.
+	 * 
+	 * @param fichier Le chemin du fichier à vérifier.
+	 * @return true si le fichier est valide, false sinon.
+	 * 
+	 * La méthode procède comme suit :
+	 * 1. Lit le fichier ligne par ligne en utilisant un BufferedReader.
+	 * 2. Effectue plusieurs vérifications pour chaque ligne :
+	 *    - Vérifie l'absence d'espaces non autorisés.
+	 *    - Vérifie la présence d'un point en fin de ligne.
+	 *    - Valide la syntaxe des éléments "colon", "ressource", "deteste" et "preferences".
+	 *    - Assure le respect de l'ordre des blocs (colon -> ressource -> deteste -> preferences).
+	 * 3. Compte et compare le nombre de colons et de ressources pour s'assurer de leur correspondance.
+	 * 4. Affiche des messages d'erreur pour chaque problème détecté avec les détails de la ligne concernée.
+	 * 5. Retourne true si aucune erreur n'a été trouvée, sinon retourne false.
+	 * 
+	 * @throws FileNotFoundException Si le fichier spécifié n'existe pas.
+	 * @throws IOException           En cas d'erreur lors de la lecture du fichier.
+	 */
+
 	public static boolean verifie(String fichier) {
 		try(BufferedReader buff=new BufferedReader(new FileReader(fichier))){
 			String ligne;
@@ -112,7 +134,7 @@ public class VerifieFichier {
 		System.err.println("Erreur lors de la lecture de votre fichier : "+ e.getMessage());
 		return false;
 	}
-	}
-	}
+  }
+}
 
 

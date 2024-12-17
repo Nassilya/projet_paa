@@ -16,23 +16,11 @@ public class Ressource {
     private Map<Colon, List<Colon>> relations = new HashMap<>();
     private Colon colonAttribue;
    
-
-    public void ajouterRelation(Colon colon1, Colon colon2) {
-        relations.computeIfAbsent(colon1, k -> new ArrayList<>()).add(colon2);
-        relations.computeIfAbsent(colon2, k -> new ArrayList<>()).add(colon1); // Relation symétrique
-    }
-    public List<Colon> getRelationsDeColon(Colon colon) {
-        return relations.getOrDefault(colon, new ArrayList<>());
-    }
-
-
-    
-    
     public Ressource(int id, String nom) {
         this.id = id;
         this.nom = nom;
     }
-	
+    
     /**
      * @author BELGUEDJ NASSILYA
      * Constructeur
@@ -40,16 +28,32 @@ public class Ressource {
     public Ressource(int id) {
         this.id = id;
         }
+    
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour retourner l'id.
+     * Retourne la liste des colons avec lesquels un colon donné entretient une relation
+     * 
+     * @param colon Le colon dont les relations doivent être récupérées
+     * @return Une liste contenant les colons en relation avec le colon spécifié
+     */
+    public List<Colon> getRelationsDeColon(Colon colon) {
+        return relations.getOrDefault(colon, new ArrayList<>());
+    }
+    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Méthode pour retourner l'id
      * @return l'id
      */
     public int getId() {
         return id;
     }
     
-
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Méthode pour retourner le nom
+     * @return le nom
+     */
     public String getNom() {
         return nom; // Getter pour le nom
     }
@@ -59,9 +63,22 @@ public class Ressource {
      * Méthode pour retourner uniquement l'identifiant de la ressource.
      * @return l'identifiant de la ressource.
      */
+    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Ajoute une relation de "détestation" symétrique entre deux colons
+     * 
+     * @param colon1 Le premier colon
+     * @param colon2 Le deuxième colon
+     */
+    public void ajouterRelation(Colon colon1, Colon colon2) {
+        relations.computeIfAbsent(colon1, k -> new ArrayList<>()).add(colon2);
+        relations.computeIfAbsent(colon2, k -> new ArrayList<>()).add(colon1); // Relation symétrique
+    }
+    
     @Override
     public String toString() {
-        return String.valueOf(id); // 
+        return String.valueOf(id);  
     }
     
     @Override

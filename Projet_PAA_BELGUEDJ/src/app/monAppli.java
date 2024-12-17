@@ -49,7 +49,7 @@ public class monAppli {
        // Set<String> colonsAvecPreferences = new HashSet<>();
 	    GestionRelations gr = new GestionRelations();
 	    GestionAffectation gf = new GestionAffectation();
-	   CalculateurDeCout calculateur = new CalculateurDeCout();
+	 
 	    
 	    
 	    
@@ -117,9 +117,9 @@ public class monAppli {
                             System.out.println("[INFO] Nombre de colons jaloux avant : " + nombreJalouxAvant);
 
                             // Lancer la recherche locale
-                           // gf.rechercheLocalee(999,calculateur);
+                           gf.rechercheLocale(150);
                             
-                            gf.branchAndBound(calculateur);
+                          //  gf.branchAndBound(calculateur);
                             System.out.println("[INFO] Solution optimale trouvée.");
 
                             // Afficher les affectations finales
@@ -521,7 +521,7 @@ private static void constructionManuelle(GestionRelations gr, GestionAffectation
 			            gf.afficherAffectations();
 
 			            // Exécuter l'algorithme de minimisation des jalousies
-			           gf.rechercheLocale(999);
+			           gf.rechercheLocale(150);
 
 			            // Afficher l'état final après l'exécution de l'algorithme
 			            System.out.println("\n[INFO] État final :");

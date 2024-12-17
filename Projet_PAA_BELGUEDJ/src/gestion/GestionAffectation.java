@@ -8,20 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.stream.Collectors;
-//import java.util.Random;
 import java.util.HashMap;
-import java.util.HashSet;
-
-
-
 
 public class GestionAffectation {
     private List<Colon> colons = new ArrayList<>();
     private List<Ressource> ressources = new ArrayList<>();
     private CalculateurDeCout calculateur;
-
+    private Map<Integer, String> idVersNomRessource = new HashMap<>();
     private List<Ressource> toutesLesRessources = new ArrayList<>();
 
     
@@ -39,8 +33,77 @@ public class GestionAffectation {
 
     
     
-   
+ // Méthode pour ajouter une ressource avec mapping
+    public void ajouterRessource(Ressource ressource, String nomOriginal) {
+        ressources.add(ressource);
+        idVersNomRessource.put(ressource.getId(), nomOriginal);
+    }
+
+    // Méthode pour obtenir le nom original d'une ressource
+    public String getNomOriginalRessource(int id) {
+        return idVersNomRessource.getOrDefault(id, "Ressource inconnue");
+    }
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne l'instance actuelle du calculateur de coût.
+     * 
+     * @return L'objet CalculateurDeCout associé.
+     * 
+     * Cette méthode permet d'accéder au calculateur utilisé pour évaluer 
+     * les coûts dans l'affectation des ressources.
+     */
+     public CalculateurDeCout getCalculateur() {
+   	    return this.calculateur;
+   	}
+
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne la liste des ressources disponibles, c'est-à-dire celles qui ne sont pas encore attribuées.
+     * 
+     * @return Une liste contenant toutes les ressources disponibles.
+     */
+    private List<Ressource> getRessourcesDisponibles() {
+    List<Ressource> disponibles = new ArrayList<>();
     
+    // Parcourir toutes les ressources
+    for (Ressource ressource : toutesLesRessources) {
+        // Vérifier si la ressource n'est pas attribuée
+        if (!ressource.estAttribuee()) {
+            disponibles.add(ressource);
+        }
+    }
+    
+    return disponibles;
+}
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Recherche et retourne le colon auquel une ressource spécifique est attribuée
+     * 
+     * @param ressourcePreferee La ressource dont on souhaite trouver le détenteur
+     * @return Le colon possédant la ressource spécifiée, ou null si aucun colon ne la possède
+     */
+    private Colon getColonParRessource(Ressource ressourcePreferee) {
+    for (Colon colon : colons) {
+        if (colon.getRessourceAttribuee().equals(ressourcePreferee)) {
+            return colon;
+        }
+    }
+    return null; // Aucun colon trouvé avec cette ressource
+}
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne la liste des ressources actuellement attribuées aux colons
+     * 
+     * @return Une liste contenant toutes les ressources attribuées
+     */
+    private List<Ressource> getRessourcesAttribuees() {
+        List<Ressource> ressourcesAttribuees = new ArrayList<>();
+        for (Colon colon : colons) {
+        ressourcesAttribuees.add(colon.getRessourceAttribuee());
+         }
+    return ressourcesAttribuees;
+   }
+
     /**
      * 
      * Crée des colons et des ressources.
@@ -118,6 +181,14 @@ public class GestionAffectation {
     }
     
     
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Recherche une ressource par son nom dans la liste des ressources disponibles
+     * Parcourt toutes les ressources et retourne celle dont le nom correspond au nom spécifié
+     * 
+     * @param nomRessource Le nom de la ressource à rechercher
+     * @return La ressource correspondant au nom spécifié si elle existe, sinon null
+     */
     public Ressource getRessourceByName(String nomRessource) {
         for (Ressource ressource : ressources) { // Parcours de la liste des ressources
             if (ressource.getNom().equals(nomRessource)) { // Comparaison des noms
@@ -126,26 +197,48 @@ public class GestionAffectation {
         }
         return null; // Retourne null si aucune ressource correspondante n'est trouvée
     }
-
-   
+    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Recherche un colon par son nom dans la liste des colons disponibles
+     * Parcourt la liste des colons et retourne celui dont le nom correspond au nom spécifié
+     * 
+     * @param nom Le nom du colon à rechercher
+     * @return Le colon correspondant au nom spécifié s'il existe, sinon null
+     */
     public Colon getColon(String nom) {
         for (Colon colon : colons) {
-            if (colon.getNom().equals(nom)) { // Comparaison des noms
+            if (colon.getNom().equals(nom)) { 
                 return colon;
             }
         }
-        return null; // Retourne null si aucun colon avec ce nom n'est trouvé
+        return null;
     }
 
-
+    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Recherche une ressource par son identifiant unique dans la liste des ressources disponibles
+     * Parcourt toutes les ressources et retourne celle dont l'identifiant correspond à l'ID spécifié
+     * 
+     * @param id L'identifiant unique de la ressource à rechercher
+     * @return La ressource correspondant à l'ID spécifié si elle existe, sinon null
+     */
     public Ressource getRessource(int id) {
         for (Ressource ressource : ressources) {
-            if (ressource.getId() == id) { // Supposons que Ressource a une méthode getId()
+            if (ressource.getId() == id) { 
                 return ressource;
             }
         }
-        return null; // Retourne null si aucune ressource avec cet ID n'est trouvée
+        return null; 
     }
+
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Affiche l'affectation actuelle des ressources aux colons
+     * Pour chaque colon, affiche son nom suivi de l'ID de la ressource qui lui est attribuée, 
+     * ou "Aucune" si aucune ressource n'est attribuée
+     */
 
     public void affficherAffectations() {
         System.out.println("Affectation actuelle des ressources :");
@@ -275,9 +368,6 @@ public class GestionAffectation {
         }
     }
     
- 
-    
-    
     /**
      * @author BELGUEDJ NASSILYA
      * Méthode pour Vérifier que tous les colons ont une liste complète de préférences.
@@ -349,111 +439,19 @@ public class GestionAffectation {
             System.out.println("Le colon " + colon.getNom() + " existe déjà.");
         }
     }
-// *******NEW*************************************************************//
-    
- // *******NEW*************************************************************//
-    
- // *******NEW*************************************************************//
-    
- // *******NEW*************************************************************//
-    
- // *******NEW*************************************************************//
-    
- // *******NEW*************************************************************//
-    
- // *******NEW*************************************************************//
-   public void rechercheLocalee(int maxIt, CalculateurDeCout calculateur) {
-        List<Colon> colons = getColons();
-      //  List<Ressource> ressourcesDisponibles = new ArrayList<>(ressources);
-     
-        //Random random = new Random();
 
-        // Initialisation avec une solution naïve
-        proposerSolutionNaive();
-        int coutActuel = calculateur.calculerNombreColonsJaloux(colons);
-        System.out.println("[INFO] Coût initial : " + coutActuel);
-
-        for (int iteration = 0; iteration < maxIt; iteration++) {
-            boolean amelioration = false;
-
-            // Parcourir chaque paire de colons pour trouver un échange bénéfique
-            for (int i = 0; i < colons.size(); i++) {
-                for (int j = i + 1; j < colons.size(); j++) {
-                    Colon colon1 = colons.get(i);
-                    Colon colon2 = colons.get(j);
-
-                    Ressource ressourceColon1 = colon1.getRessourceAttribuee();
-                    Ressource ressourceColon2 = colon2.getRessourceAttribuee();
-
-                    // Échanger les ressources temporairement
-                    colon1.setRessourceAttribuee(ressourceColon2);
-                    colon2.setRessourceAttribuee(ressourceColon1);
-
-                    if (validerAffectationUnique()) { // Vérifier que l'échange est valide
-                        int nouveauCout = calculateur.calculerNombreColonsJaloux(colons);
-
-                        if (nouveauCout < coutActuel) {
-                            // Accepter l'échange si le coût diminue
-                            coutActuel = nouveauCout;
-                            amelioration = true;
-                            System.out.println("[INFO] Échange accepté entre " + colon1.getNom() +
-                                    " et " + colon2.getNom() + " | Nouveau coût : " + coutActuel);
-                        } else {
-                            // Annuler l'échange si aucune amélioration
-                            colon1.setRessourceAttribuee(ressourceColon1);
-                            colon2.setRessourceAttribuee(ressourceColon2);
-                        }
-                    } else {
-                        // Annuler l'échange si invalide
-                        colon1.setRessourceAttribuee(ressourceColon1);
-                        colon2.setRessourceAttribuee(ressourceColon2);
-                    }
-                }
-            }
-
-            // Affichage intermédiaire toutes les 50 itérations
-            if (iteration % 50 == 0 || amelioration) {
-                System.out.println("[INFO] Itération " + iteration + ", coût actuel : " + coutActuel);
-                afficherAffectations();
-            }
-
-            // Si aucune amélioration n'est trouvée, arrêter
-            if (!amelioration) {
-                System.out.println("[INFO] Aucune amélioration trouvée à l'itération " + iteration);
-                break;
-            }
-        }
-
-        // Résultat final
-        System.out.println("[INFO] Coût final après optimisation locale : " + coutActuel);
-        System.out.println("[INFO] Affectation finale des ressources :");
-        afficherAffectations();
-    }
-
-    
- 
-    
-   private boolean validerAffectationUnique() {
-	    // Vérifier que chaque ressource est attribuée à un seul colon
-	    Set<Ressource> ressourcesAttribuees = new HashSet<>();
-
-	    for (Colon colon : colons) {
-	        Ressource ressource = colon.getRessourceAttribuee();
-	        if (ressource != null) {
-	            // Si la ressource est déjà dans le set, l'affectation n'est pas valide
-	            if (!ressourcesAttribuees.add(ressource)) {
-	                System.out.println("[ERREUR] La ressource " + ressource + " est attribuée à plusieurs colons.");
-	                return false;
-	            }
-	        }
-	    }
-
-	    // Si aucune duplication n'est trouvée, l'affectation est valide
-	    return true;
-	}
-
-
-	public void afficherRessources() {
+   
+   /**
+    * @author BELGUEDJ NASSILYA
+    * Affiche la liste des ressources enregistrées
+    * Si aucune ressource n'est disponible, affiche un message d'erreur
+    * 
+    * La méthode procède comme suit :
+    * 1. Vérifie si la liste des ressources est vide
+    * 2. Affiche un message d'erreur si aucune ressource n'est enregistrée
+    * 3. Sinon, affiche l'ID de chaque ressource présente dans la liste
+    */
+    public void afficherRessources() {
         if (ressources.isEmpty()) {
             System.out.println("[ERREUR] Aucune ressource n'est enregistrée !");
         } else {
@@ -463,7 +461,15 @@ public class GestionAffectation {
             }
         }
     }
-    private List<Colon> getColonsJaloux() {
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne la liste des colons jaloux, triée par nombre de relations en ordre décroissant
+     * Un colon est considéré jaloux si le calculateur détermine qu'il est insatisfait 
+     * par rapport à l'affectation actuelle des ressources.
+     * 
+     * @return Une liste des colons jaloux triée selon le nombre de relations de chacun
+     */
+     private List<Colon> getColonsJaloux() {
         List<Colon> colonsJaloux = new ArrayList<>();
         for (Colon colon : colons) {
             if (calculateur.estJaloux(colon, colons)) {
@@ -475,9 +481,16 @@ public class GestionAffectation {
         return colonsJaloux;
     }
 
-
-
-    public List<Ressource> rechercheLocale(int maxTentatives) {
+     /**
+      * @author BELGUEDJ NASSILYA
+      * Réalise une optimisation par recherche locale pour réduire le nombre de colons jaloux
+      * L'algorithme explore les échanges de ressources entre colons afin d'améliorer progressivement la solution actuelle
+      * 
+      * @param maxTentatives Le nombre maximum de tentatives d'amélioration
+      * @return La liste des ressources attribuées si une solution améliorée est trouvée, sinon null
+      * 
+      */
+      public List<Ressource> rechercheLocale(int maxTentatives) {
         proposerSolutionNaive(); // Initialise avec une solution naïve
         int coutInitial = calculateur.calculerNombreColonsJaloux(colons);
         int coutActuel = coutInitial; // Nombre actuel de colons jaloux
@@ -568,8 +581,17 @@ public class GestionAffectation {
         }
     }
 
-
-    private void attribuerRessource(Colon colonP, Ressource ressourceLibre) {
+      /**
+       * @author BELGUEDJ NASSILYA
+       * Attribue une ressource libre à un colon en s'assurant que les contraintes d'attribution sont respectées
+       * Remplace l'ancienne ressource du colon, si elle existe, par la nouvelle ressource spécifiée
+       * 
+       * @param colonP         Le colon à qui attribuer la ressource
+       * @param ressourceLibre La ressource à attribuer au colon
+       * @throws IllegalArgumentException Si le colon ou la ressource est null
+       * @throws IllegalStateException    Si la ressource spécifiée est déjà attribuée à un autre colon
+       */
+        private void attribuerRessource(Colon colonP, Ressource ressourceLibre) {
         if (colonP == null || ressourceLibre == null) {
             // Vérifier si les paramètres sont valides
             throw new IllegalArgumentException("Le colon ou la ressource ne peut pas être null.");
@@ -593,40 +615,14 @@ public class GestionAffectation {
         System.out.println("La ressource " + ressourceLibre + " a été attribuée au colon " + colonP);
     }
 
-
-	private List<Ressource> getRessourcesDisponibles() {
-        List<Ressource> disponibles = new ArrayList<>();
-        
-        // Parcourir toutes les ressources
-        for (Ressource ressource : toutesLesRessources) {
-            // Vérifier si la ressource n'est pas attribuée
-            if (!ressource.estAttribuee()) {
-                disponibles.add(ressource);
-            }
-        }
-        
-        return disponibles;
-    }
-
-	private Colon getColonParRessource(Ressource ressourcePreferee) {
-        for (Colon colon : colons) {
-            if (colon.getRessourceAttribuee().equals(ressourcePreferee)) {
-                return colon;
-            }
-        }
-        return null; // Aucun colon trouvé avec cette ressource
-    }
-
-	private List<Ressource> getRessourcesAttribuees() {
-        List<Ressource> ressourcesAttribuees = new ArrayList<>();
-        for (Colon colon : colons) {
-            ressourcesAttribuees.add(colon.getRessourceAttribuee());
-        }
-        return ressourcesAttribuees;
-    }
-
-    
-	private void echange(Colon colonP, Colon colonQ) {
+   /**
+    * @author BELGUEDJ NASSILYA
+    * Échange les ressources attribuées entre deux colons
+    * 
+    * @param colonP Le premier colon impliqué dans l'échange
+    * @param colonQ Le deuxième colon impliqué dans l'échange
+    */
+   private void echange(Colon colonP, Colon colonQ) {
 	    Ressource ressourceP = colonP.getRessourceAttribuee();
 	    Ressource ressourceQ = colonQ.getRessourceAttribuee();
 
@@ -636,154 +632,22 @@ public class GestionAffectation {
 	    System.out.println("Échange effectué entre Colon " + colonP.getNom() + " et Colon " + colonQ.getNom());
 	}
 
-   
-    
-    
-    
-    /**
-     * Calcule l'affectation optimale pour minimiser le nombre de colons jaloux.
-     * Utilise un graphe biparti pondéré pour modéliser le problème.
-     * @return Une carte représentant l'affectation optimale entre colons et ressources.
-     */
-    
-    /*
-    public Map<Colon, Ressource> calculerAffectationOptimale() {
-        int n = colons.size();
+  
 
-        // Construire la matrice des poids
-        int[][] weightMatrix = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                weightMatrix[i][j] = calculerPoids(colons.get(i), ressources.get(j));
-            }
-        }
-
-        // Résoudre le problème avec l'algorithme Hongrois
-        int[] resultat = algorithmeHongrois(weightMatrix);
-
-        // Vérifier que le tableau résultat a la bonne taille
-        if (resultat.length != n) {
-            throw new IllegalStateException("La taille du tableau résultat ne correspond pas au nombre de colons !");
-        }
-
-        // Vérifier la validité des indices retournés
-        for (int i = 0; i < resultat.length; i++) {
-            if (resultat[i] < 0 || resultat[i] >= ressources.size()) {
-                throw new ArrayIndexOutOfBoundsException("Indice invalide retourné par l'algorithme Hongrois : " + resultat[i]);
-            }
-        }
-
-        // Construire l'affectation optimale
-        Map<Colon, Ressource> affectations = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            affectations.put(colons.get(i), ressources.get(resultat[i]));
-        }
-
-        // Afficher les résultats
-        afficherAffectation(affectations);
-        return affectations;
-    }
-*/
-
-
-   
-    
-    
-    
-    public void minimiserJalousiesOptimise() {
-        System.out.println("[INFO] Initialisation avec l'affectation naïve...");
-        proposerSolutionNaive();
-
-        boolean amelioration = true;
-        int iterations = 0;
-        int maxIterations = 100;
-
-        while (amelioration && iterations < maxIterations) {
-            amelioration = false;
-            int jalousiesInitiales = calculateur.calculerNombreColonsJaloux(colons);
-
-            // Identifier les colons jaloux
-            for (Colon colonJaloux : colons) {
-                Ressource ressourceAttribuee = colonJaloux.getRessourceAttribuee();
-                if (ressourceAttribuee == null) continue;
-
-              //  List<Colon> voisins = colonJaloux.getRelations(); // Obtenez les voisins
-                Ressource meilleureRessource = null;
-                int meilleurGain = 0;
-
-                // Chercher une meilleure affectation pour réduire la jalousie
-                for (Ressource ressourceCandidate : ressources) {
-                    if (ressourceCandidate.equals(ressourceAttribuee)) continue;
-                    if (ressourceEstDejaAttribuee(ressourceCandidate)) continue;
-
-                    colonJaloux.setRessourceAttribuee(ressourceCandidate);
-                    int jalousiesApresAffectation = calculateur.calculerNombreColonsJaloux(colons);
-
-                    int gain = jalousiesInitiales - jalousiesApresAffectation;
-                    if (gain > meilleurGain) {
-                        meilleurGain = gain;
-                        meilleureRessource = ressourceCandidate;
-                    }
-
-                    // Revenir à l'affectation précédente pour évaluer d'autres options
-                    colonJaloux.setRessourceAttribuee(ressourceAttribuee);
-                }
-
-                // Appliquer la meilleure réaffectation trouvée
-                if (meilleureRessource != null && meilleurGain > 0) {
-                    colonJaloux.setRessourceAttribuee(meilleureRessource);
-                    amelioration = true;
-                    System.out.println("[INFO] Réaffectation : " + colonJaloux.getNom() + " reçoit " + meilleureRessource.getId());
-                }
-            }
-
-            iterations++;
-            int jalousiesActuelles = calculateur.calculerNombreColonsJaloux(colons);
-            System.out.println("[INFO] Nombre de colons jaloux après l'itération " + iterations + " : " + jalousiesActuelles);
-
-            if (jalousiesActuelles == 0) {
-                System.out.println("[INFO] Toutes les jalousies ont été éliminées !");
-                break;
-            }
-        }
-
-        int jalousiesFinales = calculateur.calculerNombreColonsJaloux(colons);
-        System.out.println("[INFO] Optimisation terminée. Nombre final de colons jaloux : " + jalousiesFinales);
-    }
-
-    
-   
-    /**
-     * Vérifie si un colon est jaloux.
-     */
-    
-   
-    
-    private Map<Integer, String> idVersNomRessource = new HashMap<>();
-
- // Méthode pour ajouter une ressource avec mapping
- public void ajouterRessource(Ressource ressource, String nomOriginal) {
-     ressources.add(ressource);
-     idVersNomRessource.put(ressource.getId(), nomOriginal);
- }
-
- // Méthode pour obtenir le nom original d'une ressource
- public String getNomOriginalRessource(int id) {
-     return idVersNomRessource.getOrDefault(id, "Ressource inconnue");
- }
-
- public CalculateurDeCout getCalculateur() {
-	    return this.calculateur;
-	}
- 
- 
- 
  
  public class Etat {
 	    Map<Colon, Ressource> affectation; // L'affectation actuelle des colons aux ressources
 	    List<Ressource> ressourcesRestantes; // Ressources qui restent à attribuer
 	    int scoreEstime; // Score estimé pour cet état
 
+	    /**
+	     * @author BELGUEDJ NASSILYA
+	     * Constructeur pour initialiser un état
+	     * 
+	     * @param affectation         La carte représentant l'affectation actuelle des colons aux ressources
+	     * @param ressourcesRestantes Liste des ressources non encore attribuées
+	     * @param scoreEstime         Le score estimé pour cet état
+	     */
 	    public Etat(Map<Colon, Ressource> affectation, List<Ressource> ressourcesRestantes, int scoreEstime) {
 	        this.affectation = new HashMap<>(affectation);
 	        this.ressourcesRestantes = new ArrayList<>(ressourcesRestantes);
@@ -793,7 +657,14 @@ public class GestionAffectation {
 	    public int getScoreEstime() {
 	        return scoreEstime;
 	    }
-
+	    /**
+	     * @author BELGUEDJ NASSILYA
+	     * Vérifie l'égalité entre deux objets Etat.
+	     * Deux états sont considérés égaux si leur affectation et leurs ressources restantes sont identiques.
+	     * 
+	     * @param obj L'objet à comparer avec cet état.
+	     * @return true si les états sont égaux, sinon false.
+	     */
 	    @Override
 	    public boolean equals(Object obj) {
 	        if (this == obj) return true;
@@ -801,7 +672,12 @@ public class GestionAffectation {
 	        Etat other = (Etat) obj;
 	        return affectation.equals(other.affectation) && ressourcesRestantes.equals(other.ressourcesRestantes);
 	    }
-
+	    /**
+	     * @author BELGUEDJ NASSILYA
+	     * Calcule le hashCode de cet état en se basant sur l'affectation et les ressources restantes.
+	     * 
+	     * @return La valeur de hachage pour cet état.
+	     */
 	    @Override
 	    public int hashCode() {
 	        return Objects.hash(affectation, ressourcesRestantes);
@@ -809,7 +685,14 @@ public class GestionAffectation {
 	}
 
  
- 
+/**
+ * @author BELGUEDJ NASSILYA
+ * Résout le problème d'affectation des ressources aux colons en utilisant l'algorithme Branch and Bound
+ * L'objectif est de minimiser le nombre de colons jaloux en explorant efficacement l'espace des solutions
+ *
+ * @param calculateur Un objet permettant de calculer le coût actuel (nombre de colons jaloux)
+ * 
+ */
  public void branchAndBound(CalculateurDeCout calculateur) {
      // File de priorité pour explorer les états prometteurs en priorité
      PriorityQueue<Etat> queue = new PriorityQueue<>(Comparator.comparingInt(Etat::getScoreEstime));
@@ -875,6 +758,14 @@ public class GestionAffectation {
          afficherAffectation(meilleureAffectation);
      }
  }
+ 
+ /**
+  * @author BELGUEDJ NASSILYA
+  * Initialise une solution améliorée en attribuant les ressources aux colons en fonction de leurs préférences
+  * Les colons sont traités dans l'ordre croissant du nombre de leurs préférences pour maximiser l'efficacité
+  * 
+  * @return Une carte (Map) représentant une première affectation des ressources aux colons
+  */
  private Map<Colon, Ressource> initialiserSolutionAmelioree() {
      Map<Colon, Ressource> solution = new HashMap<>();
      List<Ressource> ressourcesRestantes = new ArrayList<>(ressources);
@@ -895,7 +786,12 @@ public class GestionAffectation {
      }
      return solution;
  }
-
+ /**
+  * @author BELGUEDJ NASSILYA
+  * Affiche l'affectation actuelle des ressources aux colons
+  * 
+  * @param affectation La carte (Map) contenant l'affectation des colons aux ressources
+  */
  private void afficherAffectation(Map<Colon, Ressource> affectation) {
      System.out.println("Affectation des ressources :");
      for (Map.Entry<Colon, Ressource> entry : affectation.entrySet()) {
@@ -904,7 +800,15 @@ public class GestionAffectation {
  }
 
 
-
+ /**
+  * @author BELGUEDJ NASSILYA
+  * Estime le coût restant pour l'affectation en cours en se basant sur les préférences des colons
+  * et les ressources encore disponibles.
+  * 
+  * @param affectation         La carte actuelle des affectations des colons aux ressources
+  * @param ressourcesRestantes La liste des ressources qui n'ont pas encore été attribuées
+  * @return Une estimation du coût total restant pour affecter les ressources aux colons non encore satisfaits
+  */
  private int estimerCoutRestant(Map<Colon, Ressource> affectation, List<Ressource> ressourcesRestantes) {
      int estimation = 0;
      for (Colon colon : colons) {

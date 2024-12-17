@@ -10,6 +10,8 @@ public class Colon {
     private List<Ressource> preferences;
     private List<Colon> relations;
     private Ressource ressourceAttribuee;
+    private List<Ressource> ressourcesQuIlNeAimePas;
+    
     public int getPreferenceIndex(Ressource ressource) {
         if (ressource == null || preferences == null) return -1; // Si la ressource n'existe pas
         return preferences.indexOf(ressource); // Retourne l'indice ou -1 si non trouvé
@@ -25,11 +27,33 @@ public class Colon {
     }
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour retourner le nom du colon.
+     * Méthode pour retourner le nom du colon
      * @return nom du colon.
      */
     public String getNom() {
         return nom;
+    }
+  
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne la liste des ressources que le colon n'aime pas.
+     * 
+     * @return Une liste contenant les ressources "non aimées" par le colon.
+     */
+    public List<Ressource> getRessourcesQuIlNeAimePas() {
+        return ressourcesQuIlNeAimePas;
+    }
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Définit la liste des ressources que le colon n'aime pas
+     * 
+     * @param ressources La liste des ressources à marquer comme "non aimées" par le colon
+     * 
+     * La méthode procède comme suit :
+     * Initialise ou met à jour la liste des ressources que le colon n'aime pas
+     */
+    public void setRessourcesQuIlNeAimePas(List<Ressource> ressources) {
+        this.ressourcesQuIlNeAimePas = ressources;
     }
 
     /**
@@ -49,7 +73,12 @@ public class Colon {
         }
     }
 
-    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne la liste des identifiants (IDs) des ressources dans les préférences du colon
+     * 
+     * @return Une liste d'entiers représentant les identifiants des ressources préférées
+     */
     public List<Integer> getPreferencesIds() {
         try {
             if (preferences == null) {
@@ -157,6 +186,39 @@ public class Colon {
     	return prf;
     }
 
+   
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne la prochaine ressource préférée du colon qui n'est pas encore attribuée.
+     * 
+     * @return La prochaine ressource préférée non attribuée, ou null si aucune ressource n'est disponible.
+     */
+    public Ressource getProchaineRessourcePreferee() {
+        // Parcourir les ressources préférées dans l'ordre
+        for (Ressource ressource : this.getPreferences()) {
+            if (!this.getRessourceAttribuee().equals(ressource)) {
+                return ressource;
+            }
+        }
+        // Si toutes les ressources préférées ont déjà été vérifiées ou attribuées
+        return null;
+    }
+    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Vérifie si le colon peut accepter n'importe quelle ressource sans restriction
+     * 
+     * @return true si le colon n'a aucune ressource dans sa liste de ressources "non aimées", sinon false
+     */
+    public boolean peutAccepterNimporteQuelleRessource() {
+        // Vérifier si le colon a une liste de ressources qu'il "ne pas" aime
+        if (getRessourcesQuIlNeAimePas() == null || getRessourcesQuIlNeAimePas().isEmpty()) {
+            // Si la liste est vide ou nulle, le colon peut accepter n'importe quelle ressource
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * @author BELGUEDJ NASSILYA
      * Méthode toString pour afficher le nom du colon.
@@ -179,34 +241,6 @@ public class Colon {
     @Override
     public int hashCode() {
         return Objects.hash(nom);
-    }
-    public Ressource getProchaineRessourcePreferee() {
-        // Parcourir les ressources préférées dans l'ordre
-        for (Ressource ressource : this.getPreferences()) {
-            // Si la ressource n'est pas encore attribuée à ce colon, retourne-la
-            if (!this.getRessourceAttribuee().equals(ressource)) {
-                return ressource;
-            }
-        }
-        // Si toutes les ressources préférées ont déjà été vérifiées ou attribuées
-        return null;
-    }
-    public boolean peutAccepterNimporteQuelleRessource() {
-        // Vérifier si le colon a une liste de ressources qu'il "ne pas" aime
-        if (getRessourcesQuIlNeAimePas() == null || getRessourcesQuIlNeAimePas().isEmpty()) {
-            // Si la liste est vide ou nulle, le colon peut accepter n'importe quelle ressource
-            return true;
-        }
-        return false;
-    }
-    private List<Ressource> ressourcesQuIlNeAimePas;
-
-    public List<Ressource> getRessourcesQuIlNeAimePas() {
-        return ressourcesQuIlNeAimePas;
-    }
-
-    public void setRessourcesQuIlNeAimePas(List<Ressource> ressources) {
-        this.ressourcesQuIlNeAimePas = ressources;
     }
 
 

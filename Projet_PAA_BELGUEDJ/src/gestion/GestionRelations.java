@@ -7,15 +7,23 @@ import java.util.Map;
 
 public class GestionRelations {
 	private List<Colon> colons = new ArrayList<>();
-	
-	 private Map<Colon, List<Colon>> relations;
+	private Map<Colon, List<Colon>> relations;
 
-	    // Constructeur
-	    public GestionRelations() {
-	        relations = new HashMap<>();
+	// Constructeur
+	public GestionRelations() {
+	     relations = new HashMap<>();
 	    }
+	/**
+	 * @author BELGUEDJ NASSILYA
+	 * Retourne la liste des relations d'un colon donné.
+	 * 
+	 * @param colon Le colon dont on souhaite récupérer les relations.
+	 * @return Une liste des colons en relation avec le colon spécifié.
+	 */
+	public List<Colon> getRelationsDeColon(Colon colon) {
+        return relations.getOrDefault(colon, new ArrayList<>());
+    }
 
-	   
 	
     /**
      * @Auteur: BELGUEDJ NASSILYA
@@ -64,10 +72,7 @@ public class GestionRelations {
 	    }
 	}
 	
-	public List<Colon> getRelationsDeColon(Colon colon) {
-        return relations.getOrDefault(colon, new ArrayList<>());
-    }
-
+	
     /**
      * @Auteur: BELGUEDJ NASSILYA
      * Méthode pour afficher les relations entre les colons.

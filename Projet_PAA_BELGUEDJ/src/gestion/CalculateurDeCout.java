@@ -41,7 +41,15 @@ public class CalculateurDeCout {
     	System.out.println("Nombre de colons jaloux : " + nombreJaloux);
     	return nombreJaloux;
 	}
-
+	/**
+	 * @author BELGUEDJ NASSILYA
+	 * Détermine si un colon est jaloux en comparant sa ressource attribuée 
+	 * avec les ressources des colons qu'il déteste
+	 * 
+	 * @param colon  Le colon pour lequel la vérification de jalousie est effectuée
+	 * @param colons La liste des colons (utilisée pour accéder aux relations du colon)
+	 * @return true si le colon est jaloux, false sinon
+	 */
 	public boolean estJaloux(Colon colon, List<Colon> colons) {
 	    Ressource ressourceAttribuee = colon.getRessourceAttribuee();
 
@@ -56,7 +64,15 @@ public class CalculateurDeCout {
 	    return false; // Aucun critère de jalousie trouvé
 	}
 
-
+	/**
+	 * @author BELGUEDJ NASSILYA
+	 * Vérifie si une ressource possédée par un colon détesté est préférée à la ressource actuellement attribuée
+	 * 
+	 * @param colon             Le colon dont les préférences sont prises en compte
+	 * @param ressourceDeteste  La ressource attribuée à un colon détesté
+	 * @param ressourceAttribuee La ressource actuellement attribuée au colon
+	 * @return true si la ressource du colon détesté est plus préférée que la ressource attribuée, false sinon
+	 */
 	private boolean estPreferee(Colon colon, Ressource ressourceDeteste, Ressource ressourceAttribuee) {
 	    List<Ressource> preferences = colon.getPreferences();
 
