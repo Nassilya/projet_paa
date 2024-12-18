@@ -13,8 +13,21 @@ import java.util.*;
 public class ColonieParser {
     private static Map<String, Integer> mapRessources = new HashMap<>();
     private static int compteurRessource = 1;
+    private static Map<String, Integer> ressourceMapping = new HashMap<>();
+    private static int nextRessourceId = 1; // Compteur pour générer des IDs uniques (dans ressourceParser)
 
     public static GestionAffectation parser(String fichier) {
+    	/**
+    	 * @author NAGULESWARAN ALICIA
+    	 * Parse un fichier de configuration pour créer une instance de GestionAffectation contenant
+    	 * les colons, les ressources, les relations "détestation" et les préférences.
+    	 * 
+    	 * @param fichier Le chemin du fichier à parser.
+    	 * @return Une instance de GestionAffectation contenant les données extraites du fichier.
+    	 * 
+    	 * @throws IllegalArgumentException Si l'ordre des blocs dans le fichier est incorrect ou si une ligne est mal formée.
+    	 * @throws IOException              Si une erreur survient lors de la lecture du fichier.
+    	 */
         GestionAffectation colonieA = new GestionAffectation();
         GestionRelations colonieRelations = new GestionRelations(); // Instance pour les relations
 
@@ -78,8 +91,16 @@ public class ColonieParser {
     }
 
 
-    private static Map<String, Integer> ressourceMapping = new HashMap<>();
-    private static int nextRessourceId = 1; // Compteur pour générer des IDs uniques
+    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Parse une ligne décrivant une ressource pour extraire son nom et lui attribuer un identifiant unique
+     * 
+     * @param line La ligne à parser contenant la déclaration de la ressource
+     * @return Une instance de la classe Ressource initialisée avec un identifiant et un nom
+     * 
+     * @throws IllegalArgumentException Si la ligne est mal formée ou si le nom de la ressource est invalide
+     */
     public static Ressource ressourceParser(String line) {
         String[] ressources = line.split("[().,]");
         if (ressources.length != 2 || ressources[1].trim().isEmpty()) {
@@ -99,14 +120,28 @@ public class ColonieParser {
 
 
 
-
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Génère un identifiant unique pour une ressource donnée en utilisant son nom
+     * 
+     * @param nomRessource Le nom de la ressource pour laquelle l'identifiant doit être généré
+     * @return L'identifiant unique associé à la ressource
+     */
     private static int genererIdentifiantUnique(String nomRessource) {
         if (!mapRessources.containsKey(nomRessource)) {
             mapRessources.put(nomRessource, compteurRessource++);
         }
         return mapRessources.get(nomRessource);
     }
-
+    /**
+     * @author NAGULESWARAN ALICIA
+     * Parse une ligne décrivant un colon pour extraire et valider son nom
+     * 
+     * @param line La ligne à parser contenant la déclaration du colon
+     * @return Une instance de la classe Colon initialisée avec le nom extrait
+     *
+     * @throws IllegalArgumentException Si la ligne est mal formée ou si le nom du colon est invalide
+     */
     public static Colon colonParser(String line) {
         String[] colons = line.split("[(),.]");
         if (colons.length != 2 || !isAlphanumeric(colons[1])) {
@@ -116,6 +151,27 @@ public class ColonieParser {
         // Retourner un objet Colon avec le nom
         return new Colon(colons[1]);
     }
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Parse une ligne décrivant une relation de "détestation" entre deux colons et l'ajoute aux structures de gestion
+     * 
+     * @param gestionAffectation L'objet permettant de récupérer les colons existants
+     * @param gestionRelations   L'objet permettant de gérer les relations entre les colons
+     * @param line               La ligne contenant la relation à parser
+     * 
+     * @throws IllegalArgumentException Si la ligne est mal formée, contient des noms invalides ou si les colons n'existent pas
+     * 
+     * La méthode procède comme suit :
+     * 1. Nettoie la ligne en supprimant les espaces
+     * 2. Découpe la ligne en utilisant les délimiteurs `()`, `,` et `.` pour isoler les noms des colons
+     * 3. Vérifie que la ligne est correctement formée avec deux noms alphanumériques
+     * 4. Récupère les objets Colon correspondants à partir de `gestionAffectation`
+     * 5. Vérifie que les deux colons existent, sinon lève une exception
+     * 6. Ajoute la relation dans :
+     *    - `gestionRelations` pour la gestion globale
+     *    - Les objets Colon eux-mêmes pour garantir la symétrie
+     * 7. Affiche un message confirmant l'ajout de la relation
+     */
 
     public static void relationParser(GestionAffectation gestionAffectation, GestionRelations gestionRelations, String line) {
         line = line.trim().replaceAll("\\s+", ""); // Nettoyer la ligne
@@ -143,6 +199,17 @@ public class ColonieParser {
         System.out.println("Relation ajoutée entre " + colon1.getNom() + " et " + colon2.getNom());
     }
 
+    
+    /**
+     * @author NAGULESWARAN ALICIA
+     * Parse une ligne décrivant les préférences d'un colon et assigne les ressources préférées correspondantes.
+     * 
+     * @param gestion L'objet GestionAffectation utilisé pour récupérer les colons et les ressources existants.
+     * @param line    La ligne contenant les préférences à parser.
+     * 
+     * @throws IllegalArgumentException Si la ligne est mal formée, si le colon ou les ressources spécifiées n'existent pas,
+     *                                  ou si aucune préférence valide n'est trouvée.
+     */
     public static void preferenceParser(GestionAffectation gestion, String line) {
         // Supprimer les espaces superflus et le point final avant le traitement
         line = line.trim().replaceAll("\\s+", ""); // Supprimer les espaces inutiles
@@ -192,28 +259,34 @@ public class ColonieParser {
         colon.setPreferences(preferences);
         System.out.println("[INFO] Les préférences pour " + colon.getNom() + " ont été définies : " + preferences);
     }
-
-/*
-    public static void preferenceParser(GestionAffectation preference, String line) {
-        line = line.replace(").", ")"); // Nettoyer le point final
-        String[] info = line.replace(").", ")").split("[(),]");
-        if (info.length < 3 || !isAlphanumeric(info[1])) {
-            throw new IllegalArgumentException("Erreur : Ligne 'preferences' mal formée ou nom invalide -> " + line);
-        }
-
-        Colon colon = new Colon(info[1]);
-        int[] preferences = new int[info.length - 2];
-        for (int i = 2; i < info.length; i++) {
-            preferences[i - 2] = genererIdentifiantUnique(info[i]); // Utilise le mapping pour les ressources
-        }
-        preference.ajouterPreferencesColon(colon, preferences);
-    }
-
-*/
-    private static boolean isAlphanumeric(String str) {
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Vérifie si une chaîne de caractères est composée uniquement de caractères alphanumériques
+     * 
+     * @param str La chaîne à vérifier
+     * @return true si la chaîne est non nulle et ne contient que des lettres et des chiffres, sinon false
+     * 
+     * La méthode procède comme suit :
+     * 1. Vérifie que la chaîne n'est pas nulle
+     * 2. Utilise une expression régulière pour valider que la chaîne ne contient que des caractères alphabétiques (a-z, A-Z)
+     *    et numériques (0-9)
+     */
+     private static boolean isAlphanumeric(String str) {
         return str != null && str.matches("[a-zA-Z0-9]+");
     }
-    public static Ressource ressourceParser(String line, GestionAffectation gestionAffectation) {
+     
+     /**
+      * @author NAGULESWARAN ALICIA
+      * Parse une ligne décrivant une ressource, génère un identifiant unique pour celle-ci, 
+      * et l'ajoute à la gestion des ressources
+      * 
+      * @param line               La ligne contenant la déclaration de la ressource
+      * @param gestionAffectation L'objet GestionAffectation utilisé pour gérer et ajouter les ressources
+      * @return Une instance de la classe Ressource initialisée avec un identifiant unique
+      * 
+      * @throws IllegalArgumentException Si la ligne est mal formée ou si le nom de la ressource est invalide
+      */
+      public static Ressource ressourceParser(String line, GestionAffectation gestionAffectation) {
         String[] ressources = line.split("[().,]");
         if (ressources.length != 2 || !isAlphanumeric(ressources[1])) {
             throw new IllegalArgumentException("Erreur : Ligne 'ressource' mal formée ou nom invalide -> " + line);

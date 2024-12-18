@@ -1,27 +1,19 @@
 package app;
 import java.util.Scanner;
 import java.util.Set;
-
 import gestion.GestionRelations;
 import gestion.GestionAffectation;
 import gestion.CalculateurDeCout;
 import model.Colon;
-import model.Ressource;
-//import model.Ressource;
 import parser.ColonieParser;
 import parser.SauvegardeFichier;
 import parser.VerifieFichier;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
-
-
-
-
 import utilitaires.GestionnaireExceptions;
 import utilitaires.Verificateur;
 
@@ -45,23 +37,12 @@ public class monAppli {
 		    System.out.printf("=================================================\n");
 		    System.out.printf("             PRÊT À COMMANDER ?                  \n");
 		    System.out.printf("=================================================\n\n");
-		// Déclarer le Set en dehors de la structure switch pour qu'il persiste
-       // Set<String> colonsAvecPreferences = new HashSet<>();
+		
 	    GestionRelations gr = new GestionRelations();
 	    GestionAffectation gf = new GestionAffectation();
-	 
-	    
-	    
-	    
-	   // GestionAffectation gf1 = new GestionAffectation(calculateur);
-
-	    
 	    Scanner sc = new Scanner(System.in);
-	   
-	    
 	   // String cheminFichier = "testLecture.txt";
-	    
-	    
+
 	    if (args.length > 0) {
             String cheminFichier = args[0]; // Chemin passé en argument
             File fichier = new File(cheminFichier);
@@ -94,60 +75,45 @@ public class monAppli {
 
                         switch (choix) {
                         case 1:
+                        
                             System.out.println("[INFO] Résolution automatique...");
-
-                            // Charger les données du fichier
                             gf = ColonieParser.parser(cheminFichier);
 
-                            // Vérifier les ressources et colons enregistrés
-                            // System.out.println("Nombre de colons dans gf : " + gf.getColons().size());
-                            // gf.afficherRessources();
-
-                            // Exécuter la solution naïve avant recherche locale
                             gf.proposerSolutionNaive();
+                            System.out.println("[INFO] Nombre de colons jaloux avant : " + gf.getCalculateur().calculerNombreColonsJaloux(gf.getColons()));
 
-                            // Vérifier les affectations initiales
-                            System.out.println("[////////////////////////////////////// AVANT]");
+                            
+                            System.out.print("Entrez le nombre d'itérations (k) pour la recherche locale : ");
+                            int k = sc.nextInt(); // Lire le nombre d'itérations
+                            sc.nextLine(); // Consommer la nouvelle ligne
+                            
+                            // Lancer la recherche locale
+                            gf.rechercheLocale(k);
+
+                            
+            // **********************************gf.branchAndBound(calculateur);************************************
+                            // Afficher la solution optimale
+                            System.out.println("[INFO] Solution optimale trouvée : ");
                             gf.afficherAffectations();
 
-                            
-                            
-                            // Calculer et afficher le nombre de jaloux avant la recherche locale
-                            int nombreJalouxAvant = gf.getCalculateur().calculerNombreColonsJaloux(gf.getColons());
-                            System.out.println("[INFO] Nombre de colons jaloux avant : " + nombreJalouxAvant);
-
-                            // Lancer la recherche locale
-                           gf.rechercheLocale(150);
-                            
-                          //  gf.branchAndBound(calculateur);
-                            System.out.println("[INFO] Solution optimale trouvée.");
-
-                            // Afficher les affectations finales
-                            System.out.println("[//////////////////////////////////////// APRES]");
-                            gf.affficherAffectations();
-
-                            // Calculer et afficher le nombre de jaloux après la recherche locale
-                            int nombreJalouxApres = gf.getCalculateur().calculerNombreColonsJaloux(gf.getColons());
-                            System.out.println("[INFO] Nombre de colons jaloux après : " + nombreJalouxApres);
-
+                            // Sauvegarder la solution trouvée
+                          //  System.out.print("Entrez le nom du fichier pour sauvegarder la solution : ");
+                           // String cheminFichierSauvegarde = sc.nextLine().trim();
+                           // SauvegardeFichier.sauvegarderAffectation(cheminFichierSauvegarde, gf.getAffectationComplete());
                             break;
-
-
+      	
+                       
                             case 2:
-                                System.out.print("Entrez le nom du fichier de sauvegarde : ");
+                                System.out.print("Entrez le chemin du fichier pour sauvegarder la solution : ");
                                 String cheminSauvegarde = sc.nextLine().trim();
 
-                                System.out.print("Entrez le nombre d'itérations (k) pour la recherche locale : ");
-                                int k = sc.nextInt(); // Lire le nombre d'itérations
-                                sc.nextLine(); // Consommer la nouvelle ligne
+                                // Calculer le coût (nombre de colons jaloux)
+                                int cout = gf.getCalculateur().calculerNombreColonsJaloux(gf.getColons());
 
-                                // Appeler la méthode rechercheLocale
-                               
-                                List<Ressource> ressourcesAttribuees = gf.rechercheLocale(k);
-
-                                // Sauvegarder la liste obtenue
-                                SauvegardeFichier.sauvegarderAffectation(cheminSauvegarde, ressourcesAttribuees);
+                                // Sauvegarder l'affectation actuelle avec le coût
+                                SauvegardeFichier.sauvegarderAffectation(cheminSauvegarde, gf.getAffectationComplete(), cout);
                                 break;
+
 
 
                             case 3:
@@ -500,39 +466,27 @@ private static void constructionManuelle(GestionRelations gr, GestionAffectation
 			            System.out.println("\n=========================================");
 			            System.out.println("      MERCI D'AVOIR UTILISÉ LE PROGRAMME");
 			            System.out.println("=========================================\n");
-			           // System.out.println("[DEBUG] Taille des colons : " + gf.getColons().size());
-			           // System.out.println("[DEBUG] Taille des ressources : " + gf.getRessources().size());
-			          //  gf.getColons().forEach(c -> System.out.println("[DEBUG] Colon : " + c.getNom()));
-			          //  gf.getRessources().forEach(r -> System.out.println("[DEBUG] Ressource : " + r.getId()));
+	
 
 			         // Calculer et afficher la solution optimale avant de quitter
 			            System.out.println("Lancement de l'algorithme ...");
-			          
-			            
-			            
-			         // Calculer et afficher la solution optimale avant de quitter
-			            System.out.println("[INFO] Lancement de l'algorithme de minimisation des jalousies...");
-
-			         // Afficher l'état initial avant le lancement de l'algorithme
 			            System.out.println("\n[INFO] État initial :");
-			            System.out.println("AVANTTTT");
+			           
 			            int jalousiesAvant = calculateur.calculerNombreColonsJaloux(colons);
 			            System.out.println("[INFO] Nombre initial de colons jaloux : " + jalousiesAvant);
 			            gf.afficherAffectations();
 
 			            // Exécuter l'algorithme de minimisation des jalousies
-			           gf.rechercheLocale(150);
+			            System.out.print("Entrez le nombre d'itérations (k) pour la recherche locale : ");
+                        int k = sc.nextInt(); // Lire le nombre d'itérations
+                        sc.nextLine(); // Consommer la nouvelle ligne
+			            gf.rechercheLocale(k);
 
 			            // Afficher l'état final après l'exécution de l'algorithme
 			            System.out.println("\n[INFO] État final :");
-			            System.out.println("APRREEEEESSSSS.");
 			            int jalousiesApres = calculateur.calculerNombreColonsJaloux(colons);
 			            System.out.println("[INFO] Nombre final de colons jaloux : " + jalousiesApres);
-			           gf. afficherAffectations();
-
-			            
-			            System.out.println("\nAffectation finale des ressources :");
-			            gf.afficherAffectations();
+			            gf. afficherAffectations();
 			            break;
 			            
 

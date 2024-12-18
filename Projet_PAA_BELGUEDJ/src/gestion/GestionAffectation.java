@@ -18,7 +18,6 @@ public class GestionAffectation {
     private Map<Integer, String> idVersNomRessource = new HashMap<>();
     private List<Ressource> toutesLesRessources = new ArrayList<>();
 
-    
     // Constructeur par défaut
     public GestionAffectation() {
         this.calculateur = new CalculateurDeCout(); // Initialisation automatique
@@ -42,7 +41,24 @@ public class GestionAffectation {
     // Méthode pour obtenir le nom original d'une ressource
     public String getNomOriginalRessource(int id) {
         return idVersNomRessource.getOrDefault(id, "Ressource inconnue");
+        
     }
+    
+    /**
+     * @author BELGUEDJ NASSILYA
+     * Retourne une carte (Map) représentant l'affectation complète des colons aux ressources
+     * 
+     * @return Une map où chaque clé est un colon et chaque valeur est la ressource attribuée à ce colon
+     */
+    public Map<Colon, Ressource> getAffectationComplete() {
+        Map<Colon, Ressource> affectation = new HashMap<>();
+        for (Colon colon : colons) {
+            affectation.put(colon, colon.getRessourceAttribuee());
+        }
+        return affectation;
+    }
+    
+    
     /**
      * @author BELGUEDJ NASSILYA
      * Retourne l'instance actuelle du calculateur de coût.
@@ -115,7 +131,6 @@ public class GestionAffectation {
      * @param nombreColons Le nombre de colons à créer. Doit être supérieur à 0.
      * @throws IllegalArgumentException si le nombre de colons est inférieur ou égal à 0.
      */
-
     public void creerColonsEtRessources(int nombreColons) {
         try {
             if (nombreColons <= 0) {
@@ -239,7 +254,6 @@ public class GestionAffectation {
      * Pour chaque colon, affiche son nom suivi de l'ID de la ressource qui lui est attribuée, 
      * ou "Aucune" si aucune ressource n'est attribuée
      */
-
     public void affficherAffectations() {
         System.out.println("Affectation actuelle des ressources :");
         for (Colon colon : colons) {
