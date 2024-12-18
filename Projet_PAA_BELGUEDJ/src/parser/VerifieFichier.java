@@ -8,24 +8,24 @@ import java.io.IOException;
 public class VerifieFichier {
 	/**
 	 * @author NAGULESWARAN ALICIA
-	 * Vérifie la validité syntaxique et sémantique d'un fichier de configuration pour l'affectation des ressources.
+	 * Vérifie la validité syntaxique et sémantique d'un fichier de configuration pour l'affectation des ressources
 	 * 
-	 * @param fichier Le chemin du fichier à vérifier.
-	 * @return true si le fichier est valide, false sinon.
+	 * @param fichier Le chemin du fichier à vérifier
+	 * @return true si le fichier est valide, false sinon
 	 * 
 	 * La méthode procède comme suit :
-	 * 1. Lit le fichier ligne par ligne en utilisant un BufferedReader.
+	 * 1. Lit le fichier ligne par ligne en utilisant un BufferedReader
 	 * 2. Effectue plusieurs vérifications pour chaque ligne :
-	 *    - Vérifie l'absence d'espaces non autorisés.
-	 *    - Vérifie la présence d'un point en fin de ligne.
-	 *    - Valide la syntaxe des éléments "colon", "ressource", "deteste" et "preferences".
-	 *    - Assure le respect de l'ordre des blocs (colon -> ressource -> deteste -> preferences).
-	 * 3. Compte et compare le nombre de colons et de ressources pour s'assurer de leur correspondance.
-	 * 4. Affiche des messages d'erreur pour chaque problème détecté avec les détails de la ligne concernée.
-	 * 5. Retourne true si aucune erreur n'a été trouvée, sinon retourne false.
+	 *    - Vérifie l'absence d'espaces non autorisés
+	 *    - Vérifie la présence d'un point en fin de ligne
+	 *    - Valide la syntaxe des éléments "colon", "ressource", "deteste" et "preferences"
+	 *    - Assure le respect de l'ordre des blocs (colon -> ressource -> deteste -> preferences)
+	 * 3. Compte et compare le nombre de colons et de ressources pour s'assurer de leur correspondace
+	 * 4. Affiche des messages d'erreur pour chaque problème détecté avec les détails de la ligne concernée
+	 * 5. Retourne true si aucune erreur n'a été trouvée, sinon retourne false
 	 * 
-	 * @throws FileNotFoundException Si le fichier spécifié n'existe pas.
-	 * @throws IOException           En cas d'erreur lors de la lecture du fichier.
+	 * @throws FileNotFoundException Si le fichier spécifié n'existe pas
+	 * @throws IOException           En cas d'erreur lors de la lecture du fichier
 	 */
 
 	public static boolean verifie(String fichier) {
@@ -48,12 +48,7 @@ public class VerifieFichier {
 				    System.out.println("Votre fichier ne contient pas un point à la fin de la ligne " + numLigne + ".");
 				    fichierValide = false;
 				}
-
-				/*
-				if (!ligne.startsWith("colon(") || !ligne.startsWith("ressource(") || !ligne.startsWith("deteste(") || !ligne.startsWith("preferences(")) {
-					System.out.println("La ligne"+ numLigne + " ne commence ni par colon ni par ressource ni par deteste ni par preferences. \nVeuillez vérifier que votre syntaxe est correcte(pas de majuscule ni d'accents) et que vous n'avez pas ajouter autre fonction que colon, ressource, deteste, et preferences. \nATTENTION: votre fichier ne doit pas contenir d'espaces ni autre caractere que virgule parenthese et un point.");
-				}
-				*/			
+		
 				if (ligne.startsWith("colon")) {
 					int paramColon=ligne.split("[(),.]").length;
 					if (paramColon!=2) {
@@ -116,7 +111,6 @@ public class VerifieFichier {
         	    etatActuel = 4;
         	}
 
-			
 		}
 		if (nbColon!=nbRessources) {
 			System.out.println("Il n'y a pas autant de ressource que de colon");

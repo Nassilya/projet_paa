@@ -13,11 +13,11 @@ public class SauvegardeFichier {
 	/**
 	 * @author NAGULESWARAN ALICIA
 	 * @author BELGUEDJ NASSILYA
-	 * Sauvegarde l'affectation des colons aux ressources dans un fichier texte.
+	 * Sauvegarde l'affectation des colons aux ressources dans un fichier texte
 	 * 
-	 * @param cheminFichier Le chemin complet du fichier dans lequel sauvegarder.
-	 * @param affectations  La map contenant les colons et leurs ressources attribuées.
-	 * @param cout          Le coût (nombre de colons jaloux) à inclure en début de fichier.
+	 * @param cheminFichier Le chemin complet du fichier dans lequel sauvegarder
+	 * @param affectations  La map contenant les colons et leurs ressources attribuées
+	 * @param cout          Le coût (nombre de colons jaloux) à inclure en début de fichier
 	 */
 	public static void sauvegarderAffectation(String cheminFichier, Map<Colon, Ressource> affectations, int cout) {
 	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(cheminFichier))) {

@@ -28,7 +28,7 @@ public class Colon {
     /**
      * @author BELGUEDJ NASSILYA
      * Méthode pour retourner le nom du colon
-     * @return nom du colon.
+     * @return nom du colon
      */
     public String getNom() {
         return nom;
@@ -36,9 +36,9 @@ public class Colon {
   
     /**
      * @author BELGUEDJ NASSILYA
-     * Retourne la liste des ressources que le colon n'aime pas.
+     * Retourne la liste des ressources que le colon n'aime pas
      * 
-     * @return Une liste contenant les ressources "non aimées" par le colon.
+     * @return Une liste contenant les ressources "non aimées" par le colon
      */
     public List<Ressource> getRessourcesQuIlNeAimePas() {
         return ressourcesQuIlNeAimePas;
@@ -58,8 +58,8 @@ public class Colon {
 
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour retourner la liste des préférences.
-     * @return la liste des préférences.
+     * Méthode pour retourner la liste des préférences
+     * @return la liste des préférences
      */
     public List<Ressource> getPreferences() {
         try {
@@ -96,8 +96,8 @@ public class Colon {
 
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour ajouter les préférences.
-     * @param preferences       Une liste de preferences.
+     * Méthode pour ajouter les préférences
+     * @param preferences       Une liste de preferences
      */
     public void ajouterPreferences(List<Ressource> preferences) {
         try {
@@ -115,9 +115,9 @@ public class Colon {
    
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour ajouter une relation entre ce colon et un autre colon spécifique.
+     * Méthode pour ajouter une relation entre ce colon et un autre colon spécifique
      * Exemple d'utilisation : A.ajouterRelation(B)
-     * @param autreColon       Un colon.
+     * @param autreColon       Un colon
      */
     public void ajouterRelation(Colon autreColon) {
         try {
@@ -136,8 +136,8 @@ public class Colon {
     
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour retourner les relations entre les colons.
-     * @return une liste       Une liste de colons.
+     * Méthode pour retourner les relations entre les colons
+     * @return une liste       Une liste de colons
      */
     public List<Colon> getRelations() {
         return relations;
@@ -145,8 +145,8 @@ public class Colon {
    
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour retourner la ressource actuellement attribuée à ce colon.
-     * @return La liste de ressources attribuée au colon.
+     * Méthode pour retourner la ressource actuellement attribuée à ce colon
+     * @return La liste de ressources attribuée au colon
      */
     public Ressource getRessourceAttribuee() {
         return ressourceAttribuee;
@@ -154,8 +154,8 @@ public class Colon {
 
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour attribuer une ressource spécifique à ce colon et affiche un message indiquant la ressource attribuée.
-     * @param ressourceAttribuee         La ressource attribuée au colon.
+     * Méthode pour attribuer une ressource spécifique à ce colon et affiche un message indiquant la ressource attribuée
+     * @param ressourceAttribuee         La ressource attribuée au colon
      */
     public void setRessourceAttribuee(Ressource ressourceAttribuee) {
         try {
@@ -169,8 +169,8 @@ public class Colon {
 
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour définir la liste des préférences pour ce colon et affiche un message de confirmation.
-     * @param preferences         une liste de preferences.
+     * Méthode pour définir la liste des préférences pour ce colon et affiche un message de confirmation
+     * @param preferences         une liste de preferences
      */
     public void setPreferences(List<Ressource> preferences) {
         this.preferences = preferences;
@@ -179,8 +179,8 @@ public class Colon {
    
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode pour retourner les préférences sous forme de tableau d'entiers.
-     * @return tableau d'entier contenant les preferences.
+     * Méthode pour retourner les préférences sous forme de tableau d'entiers
+     * @return tableau d'entier contenant les preferences
      */
     public int[] getpreferences() {
     	return prf;
@@ -189,9 +189,9 @@ public class Colon {
    
     /**
      * @author BELGUEDJ NASSILYA
-     * Retourne la prochaine ressource préférée du colon qui n'est pas encore attribuée.
+     * Retourne la prochaine ressource préférée du colon qui n'est pas encore attribuée
      * 
-     * @return La prochaine ressource préférée non attribuée, ou null si aucune ressource n'est disponible.
+     * @return La prochaine ressource préférée non attribuée, ou null si aucune ressource n'est disponible
      */
     public Ressource getProchaineRessourcePreferee() {
         // Parcourir les ressources préférées dans l'ordre
@@ -221,8 +221,8 @@ public class Colon {
     
     /**
      * @author BELGUEDJ NASSILYA
-     * Méthode toString pour afficher le nom du colon.
-     * Cela permet d'éviter de retourner un identifiant d'objet de type "[model.Colon@266474c2]".
+     * Méthode toString pour afficher le nom du colon
+     * Cela permet d'éviter de retourner un identifiant d'objet de type "[model.Colon@266474c2]"
      * lorsque la méthode afficherRelations est appelée
      * @return Nom du colon.
      */

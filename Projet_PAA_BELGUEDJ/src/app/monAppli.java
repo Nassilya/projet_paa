@@ -60,10 +60,10 @@ public class monAppli {
                 System.out.println("[INFO] Fichier valide. Chargement des données...");
                 ColonieParser.parser(cheminFichier);
 
-                // Menu des options
+                // Menu
                 boolean continuer = true;
                 while (continuer) {
-                    System.out.println("\n=== MENU LAST ONE ===");
+                    System.out.println("\n=== MENU avec Fichier ===");
                     System.out.println("1. Résolution automatique");
                     System.out.println("2. Sauvegarder la solution actuelle");
                     System.out.println("3. Fin");
@@ -89,17 +89,10 @@ public class monAppli {
                             
                             // Lancer la recherche locale
                             gf.rechercheLocale(k);
-
-                            
             // **********************************gf.branchAndBound(calculateur);************************************
                             // Afficher la solution optimale
                             System.out.println("[INFO] Solution optimale trouvée : ");
                             gf.afficherAffectations();
-
-                            // Sauvegarder la solution trouvée
-                          //  System.out.print("Entrez le nom du fichier pour sauvegarder la solution : ");
-                           // String cheminFichierSauvegarde = sc.nextLine().trim();
-                           // SauvegardeFichier.sauvegarderAffectation(cheminFichierSauvegarde, gf.getAffectationComplete());
                             break;
       	
                        
@@ -138,14 +131,13 @@ public class monAppli {
             System.out.println("Passage à la construction et résolution manuelles.");
             System.out.println("=================================================");
 
-            // Partie 1 : Construction et résolution manuelles
+            //Construction et résolution manuelles
            constructionManuelle(gr, gf, sc);
         }
 
         sc.close();
 }
-
-	  
+  
    //****************************************************************************************************
 private static void constructionManuelle(GestionRelations gr, GestionAffectation gf, Scanner sc) {
 	
@@ -186,8 +178,6 @@ private static void constructionManuelle(GestionRelations gr, GestionAffectation
 			for (Colon colon : colons) {
 			    gr.ajouterColon(colon); // Ajoute chaque colon à GestionRelations
 			}
-
-			//int n1=-1;
 			boolean continuer = true;
 			while (continuer) {
 				System.out.println("\n=== MENU PRINCIPAL ===");

@@ -10,11 +10,12 @@ public class GestionnaireExceptions {
     private static final String LOG_FILE = "erreurs_gestion_affectation.log"; // Fichier de log
 
     /**
-     * Gère une exception avec un niveau de gravité spécifique.
+     * @author BELGUEDJ NASSILYA
+     * Gère une exception avec un niveau de gravité spécifique
      *
-     * @param e        Exception levée.
-     * @param contexte Contexte où l'erreur s'est produite.
-     * @param niveau   Niveau de gravité (INFO, WARNING, CRITICAL).
+     * @param e        Exception levée
+     * @param contexte Contexte où l'erreur s'est produite
+     * @param niveau   Niveau de gravité (INFO, WARNING, CRITICAL)
      */
     public static void gererException(Exception e, String contexte, String niveau) {
         String message = formaterMessage(e, contexte, niveau);
@@ -23,10 +24,11 @@ public class GestionnaireExceptions {
     }
 
     /**
-     * Gère une exception critique et arrête le programme.
+     * @author BELGUEDJ NASSILYA
+     * Gère une exception critique et arrête le programme
      *
-     * @param e        Exception levée.
-     * @param contexte Contexte où l'erreur s'est produite.
+     * @param e        Exception levée
+     * @param contexte Contexte où l'erreur s'est produite
      */
     public static void gererErreurCritique(Exception e, String contexte) {
         String message = formaterMessage(e, contexte, "CRITICAL");
@@ -36,12 +38,13 @@ public class GestionnaireExceptions {
     }
 
     /**
-     * Formate un message détaillé pour une exception.
+     * @author BELGUEDJ NASSILYA
+     * Formate un message détaillé pour une exception
      *
-     * @param e        Exception levée.
-     * @param contexte Contexte où l'erreur s'est produite.
-     * @param niveau   Niveau de gravité.
-     * @return Un message détaillé.
+     * @param e        Exception levée
+     * @param contexte Contexte où l'erreur s'est produite
+     * @param niveau   Niveau de gravité
+     * @return Un message détaillé
      */
     private static String formaterMessage(Exception e, String contexte, String niveau) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -53,9 +56,10 @@ public class GestionnaireExceptions {
     }
 
     /**
-     * Enregistre l'erreur dans un fichier de log.
+     * @author BELGUEDJ NASSILYA
+     * Enregistre l'erreur dans un fichier de log
      *
-     * @param message Message d'erreur à enregistrer.
+     * @param message Message d'erreur à enregistrer
      */
     private static void logErreurDansFichier(String message) {
         try (FileWriter writer = new FileWriter(LOG_FILE, true)) {

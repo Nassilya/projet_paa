@@ -9,9 +9,9 @@ import java.util.HashSet;
 public class Verificateur {
 	/**
      * @Auteur: BELGUEDJ NASSILYA
-     * Vérifier si une liste de ressources contient des doublons.
-     * @param preferences         La liste des identifiants des ressources préférées.
-     * @return true si la liste ne contient pas de doublons, false sinon.
+     * Vérifier si une liste de ressources contient des doublons
+     * @param preferences         La liste des identifiants des ressources préférées
+     * @return true si la liste ne contient pas de doublons, false sinon
      */
     public static boolean verifierDoublons(List<Integer> preferences) {
         Set<Integer> uniquePreferences = new HashSet<>(preferences);
@@ -19,10 +19,10 @@ public class Verificateur {
     }
    /**
      * @Auteur: BELGUEDJ NASSILYA
-     * Vérifie si toutes les ressources de la liste existent dans l'intervalle [1, nombreRessources] et si leur nombre correspond exactement au nombre de ressources disponibles.
-     * @param preferences         La liste des identifiants des ressources préférées.
-     * @param ressourcesDisponibles La liste des ressources disponibles.
-     * @return true si toutes les ressources existent et si leur taille correspond, false sinon.
+     * Vérifie si toutes les ressources de la liste existent dans l'intervalle [1, nombreRessources] et si leur nombre correspond exactement au nombre de ressources disponibles
+     * @param preferences         La liste des identifiants des ressources préférées
+     * @param ressourcesDisponibles La liste des ressources disponibles
+     * @return true si toutes les ressources existent et si leur taille correspond, false sinon
      */
     public static boolean verifierRessourcesExistent(List<Integer> preferences, List<Ressource> ressourcesDisponibles) {
         int nombreRessources = ressourcesDisponibles.size();
@@ -55,10 +55,10 @@ public class Verificateur {
     
     /**
      * @Auteur: BELGUEDJ NASSILYA
-     * Vérifier si la taille des préférences correspond au nombre de ressources disponibles.
-     * @param preferences         La liste des identifiants des ressources préférées.
-     * @param nombreRessources    Nombre de ressources disponibles.
-     * @return true si la taille des préférences correspond au nombre de ressources disponibles, false sinon.
+     * Vérifier si la taille des préférences correspond au nombre de ressources disponibles
+     * @param preferences         La liste des identifiants des ressources préférées
+     * @param nombreRessources    Nombre de ressources disponibles
+     * @return true si la taille des préférences correspond au nombre de ressources disponibles, false sinon
      */
     public static boolean verifierTaillePreferences(List<Integer> preferences, int nombreRessources) {
         return preferences.size() == nombreRessources;
@@ -69,7 +69,7 @@ public class Verificateur {
      * @Auteur: BELGUEDJ NASSILYA
      * Vérifier que tous les colons ont une liste complète de préférences
      * @param clons               La liste des colons
-     * @param nombreRessources    Nombre de ressources disponibles.
+     * @param nombreRessources    Nombre de ressources disponibles
      * @return true si la loste est complète, false sinon
      */
     public static boolean verifierPreferencesCompletes(List<Colon> colons, int nombreRessources) {
@@ -94,12 +94,12 @@ public class Verificateur {
     /**
      * @Auteur: BELGUEDJ NASSILYA
      * Vérifie si l'entrée utilisateur est une liste valide de préférences :
-     * - Uniquement des chiffres.
-     * - Séparés par des espaces.
-     * - Pas de caractères spéciaux, lettres ou virgules.
+     * - Uniquement des chiffres
+     * - Séparés par des espaces
+     * - Pas de caractères spéciaux, lettres ou virgules
      *
      * @param input L'entrée utilisateur.
-     * @return true si l'entrée est valide, false sinon.
+     * @return true si l'entrée est valide, false sinon
      */
     public static boolean validerPreferences(String input) {
         if (input == null || input.isEmpty()) {

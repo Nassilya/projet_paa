@@ -20,13 +20,13 @@ public class ColonieParser {
     	/**
     	 * @author NAGULESWARAN ALICIA
     	 * Parse un fichier de configuration pour créer une instance de GestionAffectation contenant
-    	 * les colons, les ressources, les relations "détestation" et les préférences.
+    	 * les colons, les ressources, les relations "détestation" et les préférences
     	 * 
-    	 * @param fichier Le chemin du fichier à parser.
-    	 * @return Une instance de GestionAffectation contenant les données extraites du fichier.
+    	 * @param fichier Le chemin du fichier à parser
+    	 * @return Une instance de GestionAffectation contenant les données extraites du fichier
     	 * 
-    	 * @throws IllegalArgumentException Si l'ordre des blocs dans le fichier est incorrect ou si une ligne est mal formée.
-    	 * @throws IOException              Si une erreur survient lors de la lecture du fichier.
+    	 * @throws IllegalArgumentException Si l'ordre des blocs dans le fichier est incorrect ou si une ligne est mal formée
+    	 * @throws IOException              Si une erreur survient lors de la lecture du fichier
     	 */
         GestionAffectation colonieA = new GestionAffectation();
         GestionRelations colonieRelations = new GestionRelations(); // Instance pour les relations
@@ -202,13 +202,13 @@ public class ColonieParser {
     
     /**
      * @author NAGULESWARAN ALICIA
-     * Parse une ligne décrivant les préférences d'un colon et assigne les ressources préférées correspondantes.
+     * Parse une ligne décrivant les préférences d'un colon et assigne les ressources préférées correspondantes
      * 
-     * @param gestion L'objet GestionAffectation utilisé pour récupérer les colons et les ressources existants.
+     * @param gestion L'objet GestionAffectation utilisé pour récupérer les colons et les ressources existants
      * @param line    La ligne contenant les préférences à parser.
      * 
      * @throws IllegalArgumentException Si la ligne est mal formée, si le colon ou les ressources spécifiées n'existent pas,
-     *                                  ou si aucune préférence valide n'est trouvée.
+     *                                  ou si aucune préférence valide n'est trouvée
      */
     public static void preferenceParser(GestionAffectation gestion, String line) {
         // Supprimer les espaces superflus et le point final avant le traitement

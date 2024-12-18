@@ -15,10 +15,10 @@ public class GestionRelations {
 	    }
 	/**
 	 * @author BELGUEDJ NASSILYA
-	 * Retourne la liste des relations d'un colon donné.
+	 * Retourne la liste des relations d'un colon donné
 	 * 
-	 * @param colon Le colon dont on souhaite récupérer les relations.
-	 * @return Une liste des colons en relation avec le colon spécifié.
+	 * @param colon Le colon dont on souhaite récupérer les relations
+	 * @return Une liste des colons en relation avec le colon spécifié
 	 */
 	public List<Colon> getRelationsDeColon(Colon colon) {
         return relations.getOrDefault(colon, new ArrayList<>());
@@ -27,7 +27,7 @@ public class GestionRelations {
 	
     /**
      * @Auteur: BELGUEDJ NASSILYA
-     * Ajoute un colon à la liste des colons (s'il n'est pas déjà présent).
+     * Ajoute un colon à la liste des colons (s'il n'est pas déjà présent)
      * @param colon      Un colon
      */
 	
@@ -52,8 +52,8 @@ public class GestionRelations {
     
 	/**
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour ajouter une relation symétrique "ne s'aiment pas" entre deux colons.
-     * Cela signifie que chaque colon est ajouté à la liste des relations de l'autre.
+     * Méthode pour ajouter une relation symétrique "ne s'aiment pas" entre deux colons
+     * Cela signifie que chaque colon est ajouté à la liste des relations de l'autre
      * @param colon1            Nom du premier colon
      * @param colon2            Nom du deuxieme colon
      */
@@ -75,8 +75,8 @@ public class GestionRelations {
 	
     /**
      * @Auteur: BELGUEDJ NASSILYA
-     * Méthode pour afficher les relations entre les colons.
-     * Pour chaque colon affiche la liste des colons avec lesquels il a une relation "ne s'aiment pas".
+     * Méthode pour afficher les relations entre les colons
+     * Pour chaque colon affiche la liste des colons avec lesquels il a une relation "ne s'aiment pas"
      */
 	public void afficherRelations() {
 	    try {
