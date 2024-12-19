@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * @author BELGUEDJ NASSILYA
- * Classe pour la gestion des ressources dans le programme
- */
 public class Ressource {
 	private int id;
     private String nom;
@@ -79,12 +75,6 @@ public class Ressource {
     public String getNom() {
         return nom; // Getter pour le nom
     }
-
-    /**
-     * @author BELGUEDJ NASSILYA
-     * Méthode pour retourner uniquement l'identifiant de la ressource.
-     * @return l'identifiant de la ressource.
-     */
     
     /**
      * @author BELGUEDJ NASSILYA

@@ -30,8 +30,8 @@ public class monAppli {
 		    System.out.printf("            /      COLONS     \\                   \n");
 		    System.out.printf("           /____________________\\                 \n");
 		    System.out.printf("          ||                    ||                \n");
-		    System.out.printf("          ||      Ressources    ||                \n");
-		    System.out.printf("          ||      Relations     ||                \n");
+		    System.out.printf("          ||                    ||                \n");
+		    System.out.printf("          ||                    ||                \n");
 		    System.out.printf("          ||____________________||                \n");
 		    System.out.printf("         //______________________\\               \n");
 		    System.out.printf("=================================================\n");
@@ -62,8 +62,12 @@ public class monAppli {
 
                 // Menu
                 boolean continuer = true;
-                while (continuer) {
-                    System.out.println("\n=== MENU avec Fichier ===");
+                while (continuer) 
+                {
+                System.out.println("\n=========================================");
+	            System.out.println("          === MENU avec Fichier ===             ");
+	            System.out.println("=========================================\n");
+                   
                     System.out.println("1. Résolution automatique");
                     System.out.println("2. Sauvegarder la solution actuelle");
                     System.out.println("3. Fin");
@@ -89,10 +93,12 @@ public class monAppli {
                             
                             // Lancer la recherche locale
                             gf.rechercheLocale(k);
-            // **********************************gf.branchAndBound(calculateur);************************************
-                            // Afficher la solution optimale
+                            
+                             // Afficher la solution optimale
                             System.out.println("[INFO] Solution optimale trouvée : ");
                             gf.afficherAffectations();
+                            
+           //***gf.branchAndBound(calculateur);*******Méthode supplémentaire expliquée dans le Rapport***********
                             break;
       	
                        
@@ -263,7 +269,7 @@ private static void constructionManuelle(GestionRelations gr, GestionAffectation
 			            Colon colon = null; // Déclaration de la variable colon
 			            String inputLine;
 
-			            // Lire le nom du colon et ses préférences dans une seule ligne
+			            
 			            while (true) {
 			                System.out.print("Indiquez le nom du colon suivi de ses préférences (séparées par un espace)");
 			                inputLine = sc1.nextLine();
@@ -364,9 +370,7 @@ private static void constructionManuelle(GestionRelations gr, GestionAffectation
 			            break;
 			    }
 			}
-
-
-			System.out.println("\n");
+            System.out.println("\n");
 			System.out.println("===== PROPOSITION D'UNE SOLUTION NAÏVE =====");
 			System.out.println("\n");
 			gf.proposerSolutionNaive();
@@ -456,8 +460,7 @@ private static void constructionManuelle(GestionRelations gr, GestionAffectation
 			            System.out.println("\n=========================================");
 			            System.out.println("      MERCI D'AVOIR UTILISÉ LE PROGRAMME");
 			            System.out.println("=========================================\n");
-	
-
+	 
 			         // Calculer et afficher la solution optimale avant de quitter
 			            System.out.println("Lancement de l'algorithme ...");
 			            System.out.println("\n[INFO] État initial :");
@@ -477,6 +480,9 @@ private static void constructionManuelle(GestionRelations gr, GestionAffectation
 			            int jalousiesApres = calculateur.calculerNombreColonsJaloux(colons);
 			            System.out.println("[INFO] Nombre final de colons jaloux : " + jalousiesApres);
 			            gf. afficherAffectations();
+			            
+			            
+      //***gf.branchAndBound(calculateur);*******Méthode supplémentaire expliquée dans le Rapport***************
 			            break;
 			            
 

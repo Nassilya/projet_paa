@@ -509,7 +509,7 @@ public class GestionAffectation {
         int coutInitial = calculateur.calculerNombreColonsJaloux(colons);
         int coutActuel = coutInitial; // Nombre actuel de colons jaloux
         int tentative = 0; // Compteur de tentatives
-
+        boolean ameliorationTrouveeGlobal = false;
         while (tentative < maxTentatives) {
             tentative++;
             boolean ameliorationTrouvee = false; // Réinitialisation pour chaque itération
@@ -579,9 +579,9 @@ public class GestionAffectation {
                 }
             }
 
-            // Si aucune amélioration n'a été trouvée pour cette tentative
-            if (!ameliorationTrouvee) {
-                System.out.println("Aucune amélioration trouvée à la tentative #" + tentative);
+            if (!ameliorationTrouvee && !ameliorationTrouveeGlobal) {
+                ameliorationTrouveeGlobal = true; // Évite d'afficher plusieurs fois
+                System.out.println("Aucune amélioration trouvée après plusieurs tentatives.");
             }
         }
 
@@ -812,7 +812,6 @@ public class GestionAffectation {
          System.out.println(entry.getKey().getNom() + " -> Ressource " + entry.getValue().getId());
      }
  }
-
 
  /**
   * @author BELGUEDJ NASSILYA
